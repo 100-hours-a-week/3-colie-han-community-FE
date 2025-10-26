@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>게시글 작성 / 수정</title>
+
+  <link rel="stylesheet" href="../css/common.css" />
+  <link rel="stylesheet" href="../css/postForm.css" />
+</head>
+<body>
+  <main class="main">
+    <div class="post-container">
+      <h2 class="post-title">게시글 작성</h2>
+
+      <form class="post-form">
+        <div class="form-group">
+          <label for="title">제목*</label>
+          <input
+            type="text"
+            id="title"
+            placeholder="제목을 입력해주세요. (최대 26글자)"
+            maxlength="26"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="content">내용*</label>
+          <textarea
+            id="content"
+            placeholder="내용을 입력해주세요."
+            maxlength="20000"
+            required
+          ></textarea>
+          <small class="helper-text">* 필수 항목입니다.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="image">이미지</label>
+          <input type="file" id="image" accept="image/*" />
+          <p class="file-name"></p>
+        </div>
+
+        <button type="submit" class="submit-btn">완료</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- layout.js가 header/footer 자동 주입 -->
+  <script src="../js/layout.js"></script>
+  <script src="../js/profile.js"></script>
+  <script src="../js/postForm.js"></script>
+</body>
+</html>

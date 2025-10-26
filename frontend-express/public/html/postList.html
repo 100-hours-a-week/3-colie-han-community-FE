@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>게시글 목록</title>
+
+  <link rel="stylesheet" href="../css/common.css" />
+  <link rel="stylesheet" href="../css/postList.css" />
+</head>
+<body>
+  <main class="main">
+    <div class="post-list-container">
+      <p class="welcome-text">
+        안녕하세요,<br />
+        아무 말 대잔치 <strong>게시판</strong> 입니다.
+      </p>
+
+      <div class="top-bar">
+        <button class="create-btn">게시글 작성</button>
+      </div>
+
+      <!-- 👇 여기에 JS로 게시글 동적 렌더링 -->
+      <div class="post-list"></div>
+    </div>
+  </main>
+
+  <!-- layout.js가 header/footer 자동 주입 -->
+  <script src="../js/layout.js"></script>
+  <script src="../js/profile.js"></script>
+  <script src="../js/postList.js"></script>
+</body>
+</html>

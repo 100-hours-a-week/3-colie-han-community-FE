@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>회원정보 수정</title>
+
+  <link rel="stylesheet" href="../css/common.css" />
+  <link rel="stylesheet" href="../css/mypage.css" />
+</head>
+<body>
+  <main class="main">
+    <div class="profile-container">
+      <h2 class="page-title">회원정보수정</h2>
+
+      <div class="profile-section">
+        <label for="profileImage" class="profile-label">프로필 사진*</label>
+        <div class="profile-circle">
+          <img id="preview" src="../assets/profile-sample.png" alt="프로필 미리보기" />
+          <button type="button" class="edit-btn">변경</button>
+          <input type="file" id="profileImage" accept="image/*" hidden />
+        </div>
+      </div>
+
+      <form class="profile-form">
+        <div class="form-group">
+          <label for="email">이메일</label>
+          <p id="email" class="readonly-text"></p>
+        </div>
+
+        <div class="form-group">
+          <label for="nickname">닉네임</label>
+          <input type="text" id="nickname" maxlength="10" required />
+          <small class="helper-text">* 닉네임은 10자 이내로 입력해주세요.</small>
+        </div>
+
+        <button type="submit" class="submit-btn">수정하기</button>
+        <button type="button" class="delete-btn">회원 탈퇴</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- layout.js가 header/footer 자동 주입 -->
+  <script src="../js/layout.js"></script>
+  <script src="../js/profile.js"></script>
+  <script src="../js/mypage.js"></script>
+</body>
+</html>

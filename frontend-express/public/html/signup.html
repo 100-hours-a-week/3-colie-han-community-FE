@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>회원가입</title>
+
+  <link rel="stylesheet" href="../css/common.css" />
+  <link rel="stylesheet" href="../css/signup.css" />
+</head>
+<body>
+  <main class="main">
+    <div class="signup-container">
+      <h2 class="signup-title">회원가입</h2>
+
+      <div class="profile-section">
+        <label for="profile" class="profile-label">프로필 사진</label>
+        <small class="helper-text">* 선택사항입니다.</small>
+        <div class="profile-circle" onclick="document.getElementById('profile').click()">+</div>
+        <input type="file" id="profile" accept="image/*" style="display:none;" />
+      </div>
+
+      <form class="signup-form">
+        <label for="email">이메일*</label>
+        <input type="email" id="email" placeholder="이메일을 입력하세요" required />
+        <small class="helper-text">* 이메일은 로그인 시 사용됩니다.</small>
+
+        <label for="password">비밀번호*</label>
+        <input type="password" id="password" placeholder="비밀번호를 입력하세요" required />
+        <small class="helper-text">* 8자 이상 입력해주세요.</small>
+
+        <label for="passwordConfirm">비밀번호 확인*</label>
+        <input type="password" id="passwordConfirm" placeholder="비밀번호를 한 번 더 입력하세요" required />
+        <small class="helper-text">* 비밀번호를 다시 한 번 입력해주세요.</small>
+
+        <label for="nickname">닉네임*</label>
+        <input type="text" id="nickname" placeholder="닉네임을 입력하세요" required />
+        <small class="helper-text">* 커뮤니티 내 표시 이름입니다.</small>
+
+        <button type="submit" class="signup-btn">회원가입</button>
+      </form>
+
+      <p class="go-login">
+        <a href="login">로그인하러 가기</a>
+      </p>
+    </div>
+  </main>
+
+  <!-- layout.js가 header/footer 자동 주입 -->
+  <script src="../js/layout.js"></script>
+  <script src="../js/profile.js"></script>
+  <script src="../js/signup.js"></script>
+</body>
+</html>

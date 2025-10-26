@@ -1,0 +1,124 @@
+/* ===== 페이지 전체 레이아웃 (중앙 정렬) ===== */
+body {
+    margin: 0;
+    background-color: #F4F5F7;   /* 전체 배경 회색 */
+    font-family: 'Noto Sans KR', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    justify-content: center;     /* 가로 중앙 */
+    align-items: center;         /* 세로 중앙 */
+    background-color: #F4F5F7;   /* 헤더와 같은 회색 배경 유지 */
+}
+
+/* ===== 회원가입 박스 ===== */
+.signup-container {
+    background: #F4F5F7;
+    padding: 2.5rem 3rem;
+    border-radius: 0.8rem;
+    width: 26rem;
+    text-align: center;
+}
+
+.signup-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+/* ===== 프로필 영역 ===== */
+.profile-section {
+    margin-bottom: 1.5rem;
+}
+
+.profile-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: left;
+    margin-bottom: 0.3rem;
+}
+
+.profile-circle {
+    width: 100px;
+    height: 100px;
+    background-color: #ddd;
+    border-radius: 50%;
+    margin: 0.5rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: #666;
+    cursor: pointer;
+
+    background-size: contain;   /* 이미지 전체가 동그란 영역 안에 보이게 */
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.helper-text {
+    display: block;
+    color: #d14;
+    font-size: 0.75rem;
+    text-align: left;
+}
+
+/* ===== 폼 ===== */
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    text-align: left;
+}
+
+.signup-form label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 0.6rem;
+}
+
+.signup-form input {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 0.4rem;
+}
+
+.signup-form input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* ===== 버튼 ===== */
+.signup-btn {
+    background-color: #a59ff4;
+    color: white;
+    border: none;
+    border-radius: 0.4rem;
+    padding: 0.9rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.signup-btn:hover {
+    background-color: #7b73d0;
+}
+
+/* ===== 로그인하러 가기 ===== */
+.go-login {
+    margin-top: 1.2rem;
+    font-size: 0.9rem;
+}
+
+.go-login a {
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+}

@@ -1,0 +1,60 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #A1C4FD, #C2E9FB);
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #222;
+}
+
+.landing-container {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 4rem 5rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+.landing-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.landing-desc {
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.8rem;
+    color: #444;
+}
+
+.enter-btn {
+    padding: 0.9rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #0078ff;
+    color: white;
+    border: none;
+    border-radius: 0.6rem;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.enter-btn:hover {
+    background-color: #005fcc;
+    transform: scale(1.03);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

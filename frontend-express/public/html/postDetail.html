@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>게시글 상세</title>
+
+  <link rel="stylesheet" href="../css/common.css" />
+  <link rel="stylesheet" href="../css/postDetail.css" />
+</head>
+<body>
+  <main class="main">
+    <div class="post-detail-container">
+      <h2 class="post-title"></h2>
+
+      <div class="post-meta">
+        <div class="writer-info">
+          <div class="profile-img"></div>
+          <div class="writer-text">
+            <p class="writer-name"></p>
+            <p class="post-date"></p>
+          </div>
+        </div>
+        <div class="post-actions" style="display: none;">
+          <button class="edit-btn">수정</button>
+          <button class="delete-btn">삭제</button>
+        </div>
+      </div>
+
+      <div class="post-image"></div>
+      <div class="post-content"></div>
+
+      <div class="post-stats">
+        <div class="stat-box"><span class="like-count">0</span><br><span>좋아요수</span></div>
+        <div class="stat-box"><span class="view-count">0</span><br><span>조회수</span></div>
+        <div class="stat-box"><span class="comment-count">0</span><br><span>댓글</span></div>
+      </div>
+
+      <div class="comment-section">
+        <textarea placeholder="댓글을 남겨보세요!"></textarea>
+        <button class="comment-submit">댓글 등록</button>
+      </div>
+
+      <div class="comment-list"></div>
+    </div>
+  </main>
+
+  <!-- layout.js가 헤더/푸터를 자동 삽입 -->
+  <script src="../js/layout.js"></script>
+  <script src="../js/profile.js"></script>
+  <script src="../js/postDetail.js"></script>
+</body>
+</html>

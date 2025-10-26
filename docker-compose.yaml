@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  express:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend-express:/app
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm start"

@@ -1,0 +1,205 @@
+/* ===== 전체 배경 및 중앙 정렬 ===== */
+body {
+    margin: 0;
+    background-color: #F4F5F7;
+    font-family: 'Noto Sans KR', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    justify-content: center;   /* 가로 중앙 */
+    align-items: flex-start;   /* 위쪽 정렬 */
+    background-color: #F4F5F7;
+    padding: 3rem 0;           /* 헤더 아래 여백 */
+}
+
+/* ===== 게시글 상세 컨테이너 ===== */
+.post-detail-container {
+    background: #fff; /* ✅ 배경 통일 (안쪽만 흰색) */
+    border-radius: 0.8rem;
+    width: 42rem;  /* ✅ 시각적으로 적당한 폭 */
+    max-width: 90%;
+    padding: 2.5rem 3rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+}
+
+/* ===== 제목 ===== */
+.post-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* ===== 작성자 정보 ===== */
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1.5px solid #ddd;
+    padding-bottom: 0.8rem;
+}
+
+.writer-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ddd;
+}
+
+.writer-name {
+    font-weight: 600;
+}
+
+.post-date {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+/* ===== 수정/삭제 버튼 ===== */
+.post-actions button {
+    background: none;
+    border: 1px solid #bbb;
+    border-radius: 0.3rem;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: #444;
+}
+
+.post-actions button:hover {
+    background: #eee;
+}
+
+/* ===== 본문 내용 ===== */
+.post-content {
+    line-height: 1.6;
+    color: #222;
+    font-size: 1rem;
+}
+
+/* ===== 좋아요/조회수/댓글 ===== */
+.post-stats {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+/* ===== 게시글 본문 내 이미지 크기 조정 ===== */
+.post-image img.post-img {
+    display: block;                /* 인라인 이미지의 아래 여백 제거 */
+    max-width: 100%;               /* 부모 컨테이너 너비를 넘지 않게 */
+    height: auto;                  /* 비율 유지하면서 크기 자동 조정 */
+    border-radius: 0.8rem;         /* 살짝 둥근 모서리 */
+    margin: 1rem auto;             /* 가운데 정렬 */
+}
+
+
+.stat-box {
+    text-align: center;
+    background: #f3f3f3;
+    border-radius: 0.5rem;
+    padding: 0.8rem 1.2rem;
+    min-width: 90px;
+    font-weight: 600;
+}
+
+.stat-box span {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* ===== 댓글 입력 영역 ===== */
+.comment-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    border-top: 1.5px solid #ccc;
+    padding-top: 1rem;
+}
+
+.comment-section textarea {
+    width: 100%;
+    height: 100px;
+    border: 1px solid #ccc;
+    border-radius: 0.4rem;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+    resize: none;
+}
+
+.comment-section textarea:focus {
+    outline: none;
+    border-color: #7b73d0;
+}
+
+.comment-submit {
+    align-self: flex-end;
+    background-color: #a59ff4;
+    color: white;
+    border: none;
+    border-radius: 0.4rem;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.comment-submit:hover {
+    background-color: #7b73d0;
+}
+
+/* ===== 댓글 목록 ===== */
+.comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.comment-item {
+    border-top: 1px solid #ddd;
+    padding-top: 1rem;
+}
+
+.comment-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.comment-text {
+    margin: 0.3rem 0 0.6rem;
+    color: #333;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.comment-actions button {
+    background: none;
+    border: 1px solid #aaa;
+    border-radius: 0.3rem;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: #444;
+}
+
+.comment-actions button:hover {
+    background: #ddd;
+}
