@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const helperText = document.querySelector(".helper-text");
     const pageTitle = document.querySelector(".post-title");
     const submitBtn = document.querySelector(".submit-btn");
+    let updateTitleCounter;
+    let updateContentCounter;
 
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get("postId");
@@ -42,6 +44,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             postTitle.value = post.title || "";
             postContent.value = post.content || "";
+
+            if (updateTitleCounter) updateTitleCounter();
+            if (updateContentCounter) updateContentCounter();
 
             if (post.postImages && post.postImages.length > 0) {
                 const fileName = post.postImages[0].imageUrl.split("/").pop();
@@ -110,4 +115,23 @@ document.addEventListener("DOMContentLoaded", async () => {
             helperText.style.color = "red";
         }
     });
+
+    function withCounter(target, maxLength, counterSelector) {
+        if (!target) return null;
+        const counterEl = document.querySelector(counterSelector);
+        const update = () => {
+            if (target.value.length > maxLength) {
+                target.value = target.value.slice(0, maxLength);
+            }
+            if (counterEl) {
+                counterEl.textContent = `${target.value.length} / ${maxLength}자`;
+            }
+        };
+        target.addEventListener("input", update);
+        update();
+        return update;
+    }
+
+    updateTitleCounter = withCounter(postTitle, 26, ".js-title-counter");
+    updateContentCounter = withCounter(postContent, 5000, ".js-content-counter");
 });

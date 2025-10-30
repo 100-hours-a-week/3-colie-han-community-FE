@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
             helperText.style.color = "green";
 
             setTimeout(() => {
-                window.location.href = "./index.html";
+                window.location.href = "./postList";
             }, 800);
 
         } catch (error) {

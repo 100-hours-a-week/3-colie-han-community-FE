@@ -1,4 +1,22 @@
-/* ✅ 기본 리셋 */
+:root {
+  --bg-body: #f6f1e4;
+  --bg-surface: #fffdf4;
+  --bg-surface-alt: #f0e8d6;
+  --ink-primary: #171717;
+  --ink-secondary: #2e2e2e;
+  --ink-muted: #595959;
+  --ink-inverse: #f5f2e8;
+  --accent: #101010;
+  --accent-soft: #303030;
+  --border-color: #d5cbb6;
+  --border-strong: #b8ad97;
+  --shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lean: 0 4px 10px rgba(0, 0, 0, 0.06);
+  --radius-lg: 14px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,90 +25,155 @@
 
 body {
   font-family: 'Noto Sans KR', sans-serif;
-  background-color: #f5f6fa;
-  color: #333;
+  background-color: var(--bg-body);
+  color: var(--ink-primary);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* ✅ Header */
+a {
+  color: inherit;
+}
+
 .header {
-  height: 60px;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
+  height: 64px;
+  background-color: var(--accent);
+  color: var(--ink-inverse);
+  border-bottom: 1px solid #0a0a0a;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2rem;
+  padding: 0 2.2rem;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 20;
+}
+
+.header h1 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .logo {
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-weight: 700;
-  color: #007bff;
+  color: var(--ink-inverse);
   text-decoration: none;
 }
 
 .nav a {
   margin-left: 1rem;
-  color: #333;
+  color: var(--ink-inverse);
   text-decoration: none;
   font-weight: 500;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s ease;
 }
 
 .nav a:hover {
-  color: #007bff;
+  background-color: var(--accent-soft);
 }
 
-/* ✅ Sidebar */
+.profile-area {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.logout-btn {
+  background-color: transparent;
+  border: 1px solid #2a2a2a;
+  color: var(--ink-inverse);
+  font-size: 0.85rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #252525;
+  border-color: #3a3a3a;
+}
+
+.profile-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #2a2a2a;
+  background-color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px #303030;
+  padding: 0;
+}
+
+.profile-btn:hover {
+  background-color: #252525;
+}
+
+.profile-btn .profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
 .sidebar {
   position: fixed;
-  top: 60px;
+  top: 64px;
   left: 0;
-  width: 200px;
-  height: calc(100% - 60px);
-  background-color: #fff;
-  border-right: 1px solid #ddd;
-  padding: 1rem;
+  width: 220px;
+  height: calc(100% - 64px);
+  background-color: var(--bg-surface);
+  border-right: 1px solid var(--border-color);
+  padding: 1.4rem 1.2rem;
 }
 
 .sidebar ul {
   list-style: none;
 }
 
-.sidebar li {
-  margin: 0.5rem 0;
+.sidebar li + li {
+  margin-top: 0.5rem;
 }
 
 .sidebar a {
-  color: #333;
-  text-decoration: none;
   display: block;
-  padding: 0.4rem 0.6rem;
-  border-radius: 6px;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--ink-secondary);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .sidebar a:hover {
-  background-color: #f0f0f0;
+  background-color: var(--bg-surface-alt);
+  color: var(--ink-primary);
 }
 
-/* ✅ Main (각 페이지 컨텐츠 영역) */
 .main {
-  margin-left: 220px;
-  padding: 2rem;
+  padding: 2.6rem 2.2rem;
   flex: 1;
+  width: 100%;
 }
 
-/* ✅ Footer */
+body.has-sidebar .main {
+  margin-left: 240px;
+}
+
 .footer {
-  background-color: #fff;
-  border-top: 1px solid #ddd;
+  background-color: var(--accent);
+  color: var(--ink-inverse);
+  border-top: 1px solid #0a0a0a;
   text-align: center;
   padding: 1rem 0;
   font-size: 0.9rem;
-  color: #666;
 }

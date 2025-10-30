@@ -1,110 +1,162 @@
-/* ===== 프로필 수정 컨테이너 ===== */
-.profile-container {
-    background: #F4F5F7;
-    padding: 2.5rem 3rem;
-    border-radius: 0.8rem;
-    text-align: center;
-    width: 38rem;              /* ✅ 회원가입 폼과 동일한 폭 */
-    max-width: 90%;
-    margin: 3rem auto;         /* ✅ 가운데 정렬 (위쪽 여백 포함) */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* 살짝 입체감 */
-}
+/* ===== Profile Settings (Analog Theme) ===== */
 
+.profile-container {
+  width: min(38rem, 92%);
+  margin: 3rem auto;
+  padding: 3rem 3.2rem;
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+}
 
 .page-title {
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 2rem;
+  letter-spacing: 0.01em;
 }
 
-/* 프로필 이미지 */
 .profile-section {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.6rem;
 }
+
 .profile-label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+  display: block;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  margin-bottom: 0.5rem;
+  text-align: left;
 }
+
 .profile-circle {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background-color: #ddd;
-    margin: 0 auto;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: relative;
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  margin: 0 auto;
+  border: 2px solid var(--border-strong);
+  background-color: var(--bg-surface-alt);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .profile-circle img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
+
 .edit-btn {
-    position: absolute;
-    bottom: 8px;
-    background-color: rgba(0,0,0,0.6);
-    color: #fff;
-    border: none;
-    border-radius: 1rem;
-    padding: 0.2rem 0.8rem;
-    font-size: 0.8rem;
-    cursor: pointer;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background-color: var(--accent);
+  color: var(--ink-inverse);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.78rem;
+  cursor: pointer;
 }
 
-/* 폼 */
 .profile-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-}
-.form-group {
-    text-align: left;
-}
-.readonly-text {
-    font-size: 0.95rem;
-    color: #555;
-    background-color: #eee;
-    padding: 0.6rem;
-    border-radius: 0.4rem;
-}
-input[type="text"] {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 0.9rem;
-    border: 1px solid #ccc;
-    border-radius: 0.4rem;
-}
-input:focus {
-    outline: none;
-    border-color: #7b73d0;
-}
-.helper-text {
-    color: #d14;
-    font-size: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1.2rem;
 }
 
-/* 버튼 */
+.form-actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
+}
+
+.form-group {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.readonly-text {
+  font-size: 0.95rem;
+  color: var(--ink-secondary);
+  background-color: var(--bg-surface-alt);
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 0.95rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background-color: #fff;
+  color: var(--ink-primary);
+  transition: border-color 0.2s ease;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent-soft);
+}
+
+.helper-text {
+  color: #b55633;
+  font-size: 0.78rem;
+}
+
 .submit-btn {
-    background-color: #a59ff4;
-    color: white;
-    border: none;
-    border-radius: 0.4rem;
-    padding: 0.9rem;
-    font-size: 1rem;
-    cursor: pointer;
+  background-color: var(--accent);
+  color: var(--ink-inverse);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.9rem;
+  font-size: 1rem;
+  cursor: pointer;
 }
+
 .submit-btn:hover {
-    background-color: #7b73d0;
+  background-color: #1f1f1f;
 }
+
+.password-btn {
+  background-color: var(--bg-body);
+  color: var(--ink-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.password-btn:hover {
+  background-color: var(--bg-surface-alt);
+  color: var(--ink-primary);
+}
+
 .delete-btn {
-    background: none;
-    border: none;
-    color: #d14;
-    font-size: 0.9rem;
-    cursor: pointer;
-    margin-top: 0.6rem;
+  background: none;
+  border: none;
+  color: #9a3520;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 0.8rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.delete-btn:hover {
+  color: #c64022;
 }

@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const editBtn = document.querySelector(".edit-btn");
     const form = document.querySelector(".profile-form");
     const deleteBtn = document.querySelector(".delete-btn");
+    const passwordBtn = document.querySelector(".password-btn");
 
     try {
         const res = await fetch(`${baseUrl}/users`, {
@@ -36,8 +37,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         emailField.textContent = user.email;
         nicknameInput.value = user.nickName || "";
-        preview.src = user.profileImageUrl
-            ? `${baseUrl}${user.profileImageUrl.startsWith("/") ? "" : "/"}${user.profileImageUrl}`
+        const imagePath = user.profileImageUrl || user.imageUrl;
+        preview.src = imagePath
+            ? `${baseUrl}${imagePath.startsWith("/") ? "" : "/"}${imagePath}`
             : "../default/profile-sample.png";
     } catch (err) {
         console.error(err);
@@ -95,7 +97,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (!res.ok) throw new Error("탈퇴 실패");
             alert("회원탈퇴가 완료되었습니다.");
-            window.location.href = "./index";
+            window.location.href = "./landing";
         } catch (err) {
             console.error(err);
             alert("탈퇴 중 오류가 발생했습니다.");
@@ -107,6 +109,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         titleEl.style.cursor = "pointer";
         titleEl.addEventListener("click", () => {
             window.location.href = "./postList";
+        });
+    }
+
+    if (passwordBtn) {
+        passwordBtn.addEventListener("click", () => {
+            window.location.href = "./changePassword";
         });
     }
 });

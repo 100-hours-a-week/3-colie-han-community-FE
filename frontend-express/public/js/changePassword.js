@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             alert("비밀번호가 변경되었습니다. 다시 로그인해주세요.");
-            window.location.href = "./login.html";
+            window.location.href = "./login";
         } catch (err) {
             console.error("요청 오류:", err);
             alert("서버 오류가 발생했습니다.");

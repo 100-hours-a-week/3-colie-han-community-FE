@@ -30,9 +30,28 @@
       <div class="post-content"></div>
 
       <div class="post-stats">
-        <div class="stat-box"><span class="like-count">0</span><br><span>좋아요수</span></div>
-        <div class="stat-box"><span class="view-count">0</span><br><span>조회수</span></div>
-        <div class="stat-box"><span class="comment-count">0</span><br><span>댓글</span></div>
+        <div class="stat-box like-box">
+          <button class="like-toggle" type="button" aria-pressed="false">
+            <span class="like-icon" aria-hidden="true">♡</span>
+            <span class="like-toggle-text">좋아요</span>
+          </button>
+          <div class="stat-value">
+            <span class="stat-count like-count-value">0</span>
+            <span class="stat-caption">좋아요수</span>
+          </div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">
+            <span class="stat-count comment-count-value">0</span>
+            <span class="stat-caption">댓글</span>
+          </div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">
+            <span class="stat-count view-count-value">0</span>
+            <span class="stat-caption">조회수</span>
+          </div>
+        </div>
       </div>
 
       <div class="comment-section">
@@ -50,3 +69,5 @@
   <script src="../js/postDetail.js"></script>
 </body>
 </html>
+
+<!--1.좋아요 추가 삭제, 표시기능 추가, 2.글자수 제한걸기, 3.디자인수정하기, 4.리프레시토큰 추가하기-->

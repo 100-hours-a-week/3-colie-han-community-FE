@@ -1,130 +1,106 @@
-
-/* ===== 페이지 전체 레이아웃 (중앙 정렬) ===== */
-body {
-    margin: 0;
-    background-color: #F4F5F7;   /* 전체 배경 회색 */
-    font-family: 'Noto Sans KR', sans-serif;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
+/* ===== Post Form (Classic Theme) ===== */
 
 .main {
-    flex: 1;
-    display: flex;
-    justify-content: center;     /* 가로 중앙 */
-    align-items: center;         /* 세로 중앙 */
-    background-color: #F4F5F7;   /* 헤더와 같은 회색 배경 유지 */
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1.4rem;
 }
 
-/* ===== 게시글 작성 컨테이너 ===== */
 .post-container {
-    background: #f4f5f7;
-    padding: 2.5rem 3rem;
-    border-radius: 0.8rem;
-    width: 36rem;
-    max-width: 90%;
-    text-align: center;
+  width: min(38rem, 92%);
+  padding: 3rem 3.2rem;
+  border-radius: 16px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
 }
 
-/* ===== 제목 (페이지 타이틀) ===== */
 .post-title {
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: 1.8rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: var(--ink-primary);
+  text-align: center;
 }
 
-/* ===== 폼 전체 ===== */
 .post-form {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
 }
 
-/* ===== 필드 그룹 ===== */
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
-/* ===== 라벨 (제목*, 내용*) ===== */
 .form-group label {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #111;
-    margin-bottom: 0.3rem;
-    padding-bottom: 0.3rem;
-    border-bottom: 1.5px solid #aaa;   /* ✅ 제목·내용 라벨 밑줄 */
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
 }
 
-/* ❌ 이미지 라벨만 밑줄 제거 */
-.form-group label[for="image"] {
-    border-bottom: none;               /* ✅ 이미지 밑줄 제거 */
-}
-
-/* ===== 입력 필드 ===== */
 .form-group input[type="text"],
 .form-group textarea {
-    border: none;
-    border-bottom: 2px solid #ccc;     /* ✅ 입력칸 밑줄 */
-    background: transparent;
-    font-size: 1rem;
-    padding: 0.6rem 0;
-    color: #222;
-    transition: border-color 0.2s;
-    width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: #fff;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: var(--ink-primary);
+  transition: border-color 0.2s ease;
+}
+
+.form-group textarea {
+  min-height: 220px;
+  resize: none;
+  line-height: 1.6;
 }
 
 .form-group input[type="text"]:focus,
 .form-group textarea:focus {
-    outline: none;
-    border-bottom-color: #7b73d0;     /* 포커스 시 보라색 */
+  outline: none;
+  border-color: var(--accent-soft);
 }
 
-/* ===== textarea ===== */
-.form-group textarea {
-    resize: none;
-    min-height: 200px;
-}
-
-/* ===== 파일 업로드 ===== */
 .form-group input[type="file"] {
-    border: none;             /* ✅ 밑줄 없음 */
-    background: none;
-    padding: 0.5rem 0;
-    font-size: 0.9rem;
-    color: #555;
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+  background-color: var(--bg-body);
+  padding: 0.7rem 1rem;
+  color: var(--ink-secondary);
 }
 
-/* ===== helper text ===== */
+.input-footnote {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+}
+
 .helper-text {
-    color: #d14;
-    font-size: 0.8rem;
-    margin-top: 0.3rem;
+  color: #b55633;
+  font-size: 0.78rem;
 }
 
-/* ===== 완료 버튼 ===== */
 .submit-btn {
-    background-color: #a59ff4;
-    color: white;
-    border: none;
-    border-radius: 0.4rem;
-    padding: 0.9rem;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-top: 1.5rem;
+  background-color: var(--accent);
+  color: var(--ink-inverse);
+  border: none;
+  border-radius: 8px;
+  padding: 0.95rem;
+  font-size: 1.05rem;
+  cursor: pointer;
 }
 
 .submit-btn:hover {
-    background-color: #7b73d0;
+  background-color: #1f1f1f;
 }
 
-/* ===== 프로필 아이콘 ===== */
-.profile-icon {
-    position: absolute;
-    right: 1.5rem;
-    font-size: 1.5rem;
-    cursor: pointer;
+.file-name {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
 }

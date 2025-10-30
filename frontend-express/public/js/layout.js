@@ -13,6 +13,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     // body에 주입
     document.body.prepend(header);
     document.body.append(footer);
+    document.dispatchEvent(
+      new CustomEvent("layout:ready", { detail: { header, footer } })
+    );
   } catch (err) {
     console.error("layout load error:", err);
   }

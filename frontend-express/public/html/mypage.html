@@ -15,7 +15,7 @@
       <div class="profile-section">
         <label for="profileImage" class="profile-label">프로필 사진*</label>
         <div class="profile-circle">
-          <img id="preview" src="../assets/profile-sample.png" alt="프로필 미리보기" />
+          <img id="preview" src="../default/profile-sample.png" alt="프로필 미리보기" />
           <button type="button" class="edit-btn">변경</button>
           <input type="file" id="profileImage" accept="image/*" hidden />
         </div>
@@ -33,7 +33,10 @@
           <small class="helper-text">* 닉네임은 10자 이내로 입력해주세요.</small>
         </div>
 
-        <button type="submit" class="submit-btn">수정하기</button>
+        <div class="form-actions">
+          <button type="submit" class="submit-btn">수정하기</button>
+          <button type="button" class="password-btn">비밀번호 변경</button>
+        </div>
         <button type="button" class="delete-btn">회원 탈퇴</button>
       </form>
     </div>
