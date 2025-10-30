@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const postTitle = document.querySelector(".post-title");
     const postContent = document.querySelector(".post-content");
     const postImageContainer = document.querySelector(".post-image");
@@ -64,6 +64,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    async function ensureLoggedIn() {
+        try {
+            const res = await fetch(`${baseUrl}/users`, {
+                method: "GET",
+                credentials: "include",
+            });
+            if (!res.ok) throw new Error("Unauthorized");
+        } catch (err) {
+            alert("로그인이 필요합니다.");
+            window.location.href = "./login";
+            throw err;
+        }
+    }
+
     async function loadPostDetail() {
         try {
             const res = await fetch(`${baseUrl}/posts/${postId}`, {
@@ -113,11 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const writerDate = document.querySelector(".writer-info .post-date");
 
         if (post.user) {
-            const profileUrl = post.user.imageUrl
-                ? (post.user.imageUrl.startsWith("/files")
-                    ? `${baseUrl}${post.user.imageUrl}`
-                    : `${baseUrl}/files/${post.user.imageUrl}`)
-                : "/assets/default-profile.png";
+            const profileUrl = resolveProfileImage(post.user);
 
             writerProfile.innerHTML = `<img src="${profileUrl}" alt="프로필 이미지">`;
             writerName.textContent = post.user.nickName ?? "익명";
@@ -190,11 +200,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const isMine = currentUserId && Number(currentUserId) === comment.user.id;
 
-            const baseUrl = "http://localhost:8080";
+            const profileUrl = resolveProfileImage(comment.user);
             item.innerHTML = `
                 <div class="comment-meta">
                     <div class="profile-img small">
-                        <img src="${baseUrl}${comment.user.imageUrl}" alt="프로필">
+                        <img src="${profileUrl}" alt="프로필">
                     </div>
                     <div class="comment-info">
                         <p class="comment-writer">${comment.user.nickName}</p>
@@ -487,13 +497,23 @@ document.addEventListener("DOMContentLoaded", () => {
         return date.toLocaleString("ko-KR", { timeZone: "Asia/Seoul" });
     }
 
-    async function init() {
+    function resolveProfileImage(user) {
+        if (!user) return "/default/profile-sample.png";
+        const url = user.profileImageUrl || user.imageUrl;
+        if (!url) return "/default/profile-sample.png";
+        if (url.startsWith("http")) return url;
+        if (url.startsWith("/files")) return `${baseUrl}${url}`;
+        return `${baseUrl}/files/${url}`;
+    }
+
+    try {
+        await ensureLoggedIn();
         await fetchCurrentUser();
         await loadPostDetail();
         if (canUseLike) {
             await loadLikeState();
         }
+    } catch (_) {
+        // already handled in ensureLoggedIn
     }
-
-    init();
 });

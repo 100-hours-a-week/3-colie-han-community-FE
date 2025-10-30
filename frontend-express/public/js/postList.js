@@ -17,6 +17,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
+    async function ensureLoggedIn() {
+        try {
+            const res = await fetch(`${baseUrl}/users`, {
+                method: "GET",
+                credentials: "include",
+            });
+
+            if (!res.ok) throw new Error("Unauthorized");
+        } catch (err) {
+            alert("로그인이 필요합니다.");
+            window.location.href = "./login";
+            throw err;
+        }
+    }
+
     async function loadPosts(page = 0) {
         try {
             const res = await fetch(`${baseUrl}/posts?page=${page}&size=10&sort=createdAt,DESC`, {
@@ -72,13 +87,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     function getProfileUrl(user) {
-        if (!user || !user.imageUrl) return "/assets/default-profile.png";
-        const url = user.imageUrl;
-        if (url.startsWith("/files")) {
-            return `${baseUrl}${url}`;
-        } else {
-            return `${baseUrl}/files/${url}`;
-        }
+        if (!user) return "/default/profile-sample.png";
+        const url = user.profileImageUrl || user.imageUrl;
+        if (!url) return "/default/profile-sample.png";
+        if (url.startsWith("http")) return url;
+        if (url.startsWith("/files")) return `${baseUrl}${url}`;
+        return `${baseUrl}/files/${url}`;
     }
 
     function sanitize(str) {
@@ -90,5 +104,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             .replace(/'/g, "&#039;");
     }
 
-    loadPosts();
+    try {
+        await ensureLoggedIn();
+        loadPosts();
+    } catch (_) {
+        /* handled inside ensureLoggedIn */
+    }
 });
