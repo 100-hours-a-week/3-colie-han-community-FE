@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const helperText = document.querySelector(".helper-text");
     const pageTitle = document.querySelector(".post-title");
     const submitBtn = document.querySelector(".submit-btn");
-    let updateTitleCounter;
-    let updateContentCounter;
+    const titleCounter = document.querySelector('.char-counter[data-target="title"]');
+    const contentCounter = document.querySelector('.char-counter[data-target="content"]');
 
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get("postId");
@@ -44,9 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             postTitle.value = post.title || "";
             postContent.value = post.content || "";
-
-            if (updateTitleCounter) updateTitleCounter();
-            if (updateContentCounter) updateContentCounter();
+            updateCounters();
 
             if (post.postImages && post.postImages.length > 0) {
                 const fileName = post.postImages[0].imageUrl.split("/").pop();
@@ -63,6 +61,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     postImage.addEventListener("change", (e) => {
         const file = e.target.files[0];
         fileNameText.textContent = file ? `선택된 파일: ${file.name}` : "파일 없음";
+    });
+
+    function updateCounters() {
+        if (titleCounter) {
+            titleCounter.textContent = `${postTitle.value.length} / 26자`;
+        }
+        if (contentCounter) {
+            contentCounter.textContent = `${postContent.value.length} / 5000자`;
+        }
+    }
+
+    function limitInputLength(element, maxLength) {
+        if (element.value.length > maxLength) {
+            element.value = element.value.slice(0, maxLength);
+        }
+    }
+
+    postTitle.addEventListener("input", () => {
+        limitInputLength(postTitle, 26);
+        updateCounters();
+    });
+
+    postContent.addEventListener("input", () => {
+        limitInputLength(postContent, 20000);
+        updateCounters();
     });
 
     postForm.addEventListener("submit", async (event) => {
@@ -116,22 +139,5 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 
-    function withCounter(target, maxLength, counterSelector) {
-        if (!target) return null;
-        const counterEl = document.querySelector(counterSelector);
-        const update = () => {
-            if (target.value.length > maxLength) {
-                target.value = target.value.slice(0, maxLength);
-            }
-            if (counterEl) {
-                counterEl.textContent = `${target.value.length} / ${maxLength}자`;
-            }
-        };
-        target.addEventListener("input", update);
-        update();
-        return update;
-    }
-
-    updateTitleCounter = withCounter(postTitle, 26, ".js-title-counter");
-    updateContentCounter = withCounter(postContent, 5000, ".js-content-counter");
+    updateCounters();
 });

@@ -25,6 +25,43 @@ document.addEventListener("DOMContentLoaded", async () => {
     const form = document.querySelector(".profile-form");
     const deleteBtn = document.querySelector(".delete-btn");
     const passwordBtn = document.querySelector(".password-btn");
+    const nicknameHelper = form.querySelector(".helper-text");
+    const NICKNAME_REGEX = /^[가-힣a-zA-Z0-9]{2,10}$/;
+
+    const setHelper = (helper, message, type = "info") => {
+        if (!helper) return;
+        helper.textContent = message;
+        helper.classList.remove("is-error", "is-success");
+        if (type === "error") helper.classList.add("is-error");
+        else if (type === "success") helper.classList.add("is-success");
+    };
+
+    if (nicknameHelper && !nicknameHelper.dataset.default) {
+        nicknameHelper.dataset.default = nicknameHelper.textContent.trim();
+    }
+
+    const resetHelper = (helper) => {
+        if (!helper) return;
+        setHelper(helper, helper.dataset.default || "", "info");
+    };
+
+    const validateNickname = (showSuccess = false) => {
+        const value = nicknameInput.value.trim();
+        if (!value) {
+            resetHelper(nicknameHelper);
+            return false;
+        }
+        if (!NICKNAME_REGEX.test(value) || /[\u3130-\u318F]/.test(value)) {
+            setHelper(nicknameHelper, "2~10자의 한글 또는 영문, 숫자만 사용할 수 있어요.", "error");
+            return false;
+        }
+        if (showSuccess) {
+            setHelper(nicknameHelper, "사용 가능한 닉네임입니다.", "success");
+        } else {
+            resetHelper(nicknameHelper);
+        }
+        return true;
+    };
 
     try {
         const res = await fetch(`${baseUrl}/users`, {
@@ -41,6 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         preview.src = imagePath
             ? `${baseUrl}${imagePath.startsWith("/") ? "" : "/"}${imagePath}`
             : "../default/profile-sample.png";
+        validateNickname();
     } catch (err) {
         console.error(err);
         alert("회원 정보를 불러올 수 없습니다.");
@@ -52,9 +90,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (file) preview.src = URL.createObjectURL(file);
     });
 
+    nicknameInput.addEventListener("input", () => {
+        validateNickname(true);
+    });
+
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const nickname = nicknameInput.value.trim();
+
+        if (!validateNickname(true)) {
+            nicknameInput.focus();
+            return;
+        }
 
         try {
             // 닉네임

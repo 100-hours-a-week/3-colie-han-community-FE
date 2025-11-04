@@ -55,8 +55,7 @@
 }
 
 .helper-text {
-  font-size: 0.78rem;
-  color: #b55633;
+  text-align: left;
 }
 
 .login-btn,

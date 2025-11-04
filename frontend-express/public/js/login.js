@@ -5,6 +5,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const helperText = document.querySelector(".helper-text");
     const signupBtn = document.querySelector(".signup-btn");
 
+    const defaultHelperMessage = helperText ? helperText.dataset.default || "" : "";
+
+    const setHelper = (message, type = "info") => {
+        if (!helperText) return;
+        helperText.textContent = message;
+        helperText.classList.remove("is-error", "is-success");
+        if (type === "error") helperText.classList.add("is-error");
+        else if (type === "success") helperText.classList.add("is-success");
+    };
+
+    const resetHelper = () => setHelper(defaultHelperMessage || "", "info");
+
+    if (helperText) {
+        helperText.dataset.default = helperText.textContent.trim();
+    }
+    resetHelper();
+
     signupBtn.addEventListener("click", () => {
         window.location.href = "./signup";
     });
@@ -17,17 +34,27 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    const validateFields = () => {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+        if (!email || !password) {
+            setHelper("이메일과 비밀번호를 모두 입력해주세요.", "error");
+            return false;
+        }
+        resetHelper();
+        return true;
+    };
+
+    emailInput.addEventListener("input", validateFields);
+    passwordInput.addEventListener("input", validateFields);
+
     loginForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
+        if (!validateFields()) return;
+
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
-
-        if (!email || !password) {
-            helperText.textContent = "이메일과 비밀번호를 모두 입력해주세요.";
-            helperText.style.color = "red";
-            return;
-        }
 
         try {
             const formData = new FormData();
@@ -44,17 +71,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error("로그인 실패");
             }
 
-            helperText.textContent = "로그인 성공!";
-            helperText.style.color = "green";
+            setHelper("로그인 성공!", "success");
 
             setTimeout(() => {
                 window.location.href = "./postList";
-            }, 800);
+            }, 600);
 
         } catch (error) {
             console.error("로그인 에러:", error);
-            helperText.textContent = "이메일 또는 비밀번호가 올바르지 않습니다.";
-            helperText.style.color = "red";
+            setHelper("이메일 또는 비밀번호가 올바르지 않습니다.", "error");
         }
     });
 });

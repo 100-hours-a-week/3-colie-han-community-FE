@@ -13,10 +13,10 @@
       <h2 class="signup-title">회원가입</h2>
 
       <div class="profile-section">
-        <label for="profile" class="profile-label">프로필 사진</label>
-        <small class="helper-text">* 선택사항입니다.</small>
+        <label for="profile" class="profile-label">프로필 사진*</label>
+        <small class="helper-text">* 이미지를 반드시 선택해주세요.</small>
         <div class="profile-circle" onclick="document.getElementById('profile').click()">+</div>
-        <input type="file" id="profile" accept="image/*" style="display:none;" />
+        <input type="file" id="profile" accept="image/*" style="display:none;" required />
       </div>
 
       <form class="signup-form">

@@ -177,3 +177,18 @@ body.has-sidebar .main {
   padding: 1rem 0;
   font-size: 0.9rem;
 }
+
+.helper-text {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  margin-top: 0.2rem;
+}
+
+.helper-text.is-error {
+  color: #c64022;
+}
+
+.helper-text.is-success {
+  color: #1a8f5d;
+}
