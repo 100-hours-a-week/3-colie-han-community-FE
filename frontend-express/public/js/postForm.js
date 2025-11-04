@@ -130,7 +130,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             const result = await response.json();
-            alert(mode === "edit" ? "게시글이 수정되었습니다." : "게시글이 등록되었습니다.");
             window.location.href = `./postDetail?postId=${mode === "edit" ? postId : result}`;
         } catch (e) {
             console.error("게시글 저장 오류:", e);

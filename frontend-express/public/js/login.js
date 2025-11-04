@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!validateFields()) return;
 
+        const auth = window.auth || {};
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
 
@@ -71,6 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error("로그인 실패");
             }
 
+            await auth.captureAuthFromResponse?.(response);
+
             setHelper("로그인 성공!", "success");
 
             setTimeout(() => {
@@ -79,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (error) {
             console.error("로그인 에러:", error);
+            auth.clearAuthToken?.();
             setHelper("이메일 또는 비밀번호가 올바르지 않습니다.", "error");
         }
     });

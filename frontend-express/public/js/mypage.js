@@ -126,7 +126,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 });
             }
 
-            alert("회원정보가 수정되었습니다.");
             location.reload();
         } catch (err) {
             console.error(err);

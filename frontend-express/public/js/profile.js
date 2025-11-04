@@ -1,5 +1,5 @@
 // public/js/profile.js
-const PROFILE_BASE_URL = "http://localhost:8080";
+const PROFILE_BASE_URL = (window.auth && window.auth.API_BASE_URL) || "http://localhost:8080";
 let profileAreaInitialized = false;
 
 async function initProfileArea() {
@@ -9,6 +9,10 @@ async function initProfileArea() {
   const profileImg = profileBtn ? profileBtn.querySelector(".profile-img") : null;
   const logoutBtn = document.querySelector(".logout-btn");
   const logoTitle = document.querySelector(".header h1");
+
+  if (logoutBtn) {
+    logoutBtn.style.display = "none";
+  }
 
   if (!profileBtn || !profileImg) {
     return;
@@ -58,6 +62,7 @@ async function initProfileArea() {
         return;
       }
 
+      window.auth?.clearAuthToken?.();
       window.location.href = "./login";
     });
   }
@@ -74,6 +79,10 @@ async function initProfileArea() {
 
     const user = await res.json();
     const imagePath = user.profileImageUrl || user.imageUrl;
+
+    if (logoutBtn) {
+      logoutBtn.style.display = "";
+    }
 
     if (imagePath) {
       const absoluteUrl = imagePath.startsWith("http")
