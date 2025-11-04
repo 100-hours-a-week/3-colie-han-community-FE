@@ -2,6 +2,7 @@
   const API_BASE_URL = "http://localhost:8080";
   const AUTH_TOKEN_KEY = "satellite:authToken";
   const originalFetch = window.fetch.bind(window);
+  let refreshPromise = null;
 
   const getAuthToken = () => {
     try {
@@ -117,25 +118,78 @@
     }
   };
 
-  window.fetch = (input, init) => {
+  const prepareInit = (input, init, forceAuth = false) => {
     const finalInit = { ...(init || {}) };
 
-    if (shouldAttachAuth(input)) {
-      if (finalInit.credentials === undefined) {
-        finalInit.credentials = "include";
-      }
+    if (!shouldAttachAuth(input)) {
+      return finalInit;
+    }
 
-      const token = formatAuthHeader(getAuthToken());
-      if (token) {
-        const headers = new Headers(finalInit.headers || {});
-        if (!headers.has("Authorization")) {
-          headers.set("Authorization", token);
+    if (finalInit.credentials === undefined) {
+      finalInit.credentials = "include";
+    }
+
+    const token = formatAuthHeader(getAuthToken());
+    if (!token) {
+      return finalInit;
+    }
+
+    const headers = new Headers(finalInit.headers || {});
+    if (forceAuth || !headers.has("Authorization")) {
+      headers.set("Authorization", token);
+    }
+    finalInit.headers = headers;
+
+    return finalInit;
+  };
+
+  const refreshAccessToken = async () => {
+    if (!refreshPromise) {
+      refreshPromise = (async () => {
+        const response = await originalFetch(`${API_BASE_URL}/users/refresh`, {
+          method: "POST",
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          clearAuthToken();
+          throw new Error("Token refresh failed");
         }
-        finalInit.headers = headers;
+
+        await captureAuthFromResponse(response);
+        return response;
+      })().finally(() => {
+        refreshPromise = null;
+      });
+    }
+
+    return refreshPromise;
+  };
+
+  const performFetch = async (input, init) => {
+    const response = await originalFetch(input, init);
+
+    if (shouldAttachAuth(input) && response.ok) {
+      await captureAuthFromResponse(response);
+    }
+
+    return response;
+  };
+
+  window.fetch = async (input, init) => {
+    const needsAuth = shouldAttachAuth(input);
+    let response = await performFetch(input, prepareInit(input, init));
+
+    if (needsAuth && response.status === 401) {
+      try {
+        await refreshAccessToken();
+        response = await performFetch(input, prepareInit(input, init, true));
+      } catch (_) {
+        /* refresh failed: return original 401 response */
       }
     }
 
-    return originalFetch(input, finalInit);
+    return response;
   };
 
   window.auth = {
