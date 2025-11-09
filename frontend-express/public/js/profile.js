@@ -1,4 +1,3 @@
-// public/js/profile.js
 const PROFILE_BASE_URL = (window.auth && window.auth.API_BASE_URL) || "http://localhost:8080";
 let profileAreaInitialized = false;
 

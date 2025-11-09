@@ -27,4 +27,4 @@ app.use("/html", express.static(HTML_ROOT));
 
 app.use((_, res) => res.status(404).send("404 Not Found"));
 
-app.listen(PORT, () => console.log(`🚀 http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`http://localhost:${PORT}`));

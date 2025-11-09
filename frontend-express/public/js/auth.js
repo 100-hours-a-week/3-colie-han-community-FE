@@ -34,7 +34,7 @@
     try {
       window.localStorage.setItem(AUTH_TOKEN_KEY, normalized);
     } catch (_) {
-      /* ignore storage errors */
+
     }
   };
 
@@ -42,7 +42,7 @@
     try {
       window.localStorage.removeItem(AUTH_TOKEN_KEY);
     } catch (_) {
-      /* ignore storage errors */
+      
     }
   };
 
@@ -87,7 +87,7 @@
         return formatAuthHeader(candidate);
       }
     } catch (_) {
-      /* ignore body parsing errors */
+      
     }
 
     return null;
@@ -185,7 +185,7 @@
         await refreshAccessToken();
         response = await performFetch(input, prepareInit(input, init, true));
       } catch (_) {
-        /* refresh failed: return original 401 response */
+        
       }
     }
 

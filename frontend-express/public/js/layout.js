@@ -1,4 +1,3 @@
-// public/js/layout.js
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const res = await fetch("/html/layout.html");

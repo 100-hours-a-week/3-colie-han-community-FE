@@ -514,6 +514,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             await loadLikeState();
         }
     } catch (_) {
-        // already handled in ensureLoggedIn
+        
     }
 });

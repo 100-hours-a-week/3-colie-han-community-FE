@@ -108,6 +108,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         await ensureLoggedIn();
         loadPosts();
     } catch (_) {
-        /* handled inside ensureLoggedIn */
+        
     }
 });
