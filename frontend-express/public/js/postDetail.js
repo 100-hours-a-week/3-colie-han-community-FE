@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let isLikeProcessing = false;
     let canUseLike = true;
 
-    const baseUrl = "http://localhost:8080";
+    const baseUrl = window.API_BASE_URL || `${window.location.origin}/api`;
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get("postId");
 
@@ -120,7 +120,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // 이미지
         postImageContainer.innerHTML = "";
-        const baseUrl = "http://localhost:8080";
 
         const writerProfile = document.querySelector(".writer-info .profile-img");
         const writerName = document.querySelector(".writer-info .writer-name");

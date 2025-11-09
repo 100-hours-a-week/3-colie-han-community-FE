@@ -1,5 +1,15 @@
 (function () {
-  const API_BASE_URL = "http://localhost:8080";
+  const DEFAULT_API_BASE_URL = `${window.location.origin}/api`;
+  const API_BASE_URL = (() => {
+    const candidate = window.API_BASE_URL || DEFAULT_API_BASE_URL;
+    try {
+      const normalized = new URL(candidate, window.location.origin);
+      return normalized.href.replace(/\/+$/, "");
+    } catch (_) {
+      return candidate.replace(/\/+$/, "");
+    }
+  })();
+  window.API_BASE_URL = API_BASE_URL;
   const AUTH_TOKEN_KEY = "satellite:authToken";
   const originalFetch = window.fetch.bind(window);
   let refreshPromise = null;
@@ -112,7 +122,7 @@
 
     try {
       const absolute = new URL(targetUrl, window.location.href);
-      return absolute.origin === API_BASE_URL;
+      return absolute.href.startsWith(API_BASE_URL);
     } catch (_) {
       return false;
     }

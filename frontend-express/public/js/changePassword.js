@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const baseUrl = "http://localhost:8080";
+    const baseUrl = window.API_BASE_URL || `${window.location.origin}/api`;
     const form = document.querySelector(".password-form");
     const passwordInput = document.getElementById("password");
     const confirmInput = document.getElementById("password-confirm");

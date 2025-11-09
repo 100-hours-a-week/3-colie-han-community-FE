@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get("postId");
     const mode = urlParams.get("mode");
-    const baseUrl = "http://localhost:8080";
+    const baseUrl = window.API_BASE_URL || `${window.location.origin}/api`;
 
     const titleEl = document.querySelector(".header h1");
     if (titleEl) {

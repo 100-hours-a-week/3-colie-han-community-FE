@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const baseUrl = "http://localhost:8080";
+    const baseUrl = window.API_BASE_URL || `${window.location.origin}/api`;
     const postListContainer = document.querySelector(".post-list");
     const createBtn = document.querySelector(".create-btn");
 

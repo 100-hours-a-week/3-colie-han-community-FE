@@ -1,6 +1,6 @@
 // ../js/index.js
 document.addEventListener("DOMContentLoaded", async () => {
-  const baseUrl = "http://localhost:8080";
+  const baseUrl = window.API_BASE_URL || `${window.location.origin}/api`;
 
   // 로그인 상태 확인
   try {

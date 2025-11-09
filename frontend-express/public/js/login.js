@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const helperText = document.querySelector(".helper-text");
     const signupBtn = document.querySelector(".signup-btn");
 
+    const baseUrl = window.API_BASE_URL || `${window.location.origin}/api`;
     const defaultHelperMessage = helperText ? helperText.dataset.default || "" : "";
 
     const setHelper = (message, type = "info") => {
@@ -62,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
             formData.append("email", email);
             formData.append("password", password);
 
-            const response = await fetch("http://localhost:8080/login", {
+            const response = await fetch(`${baseUrl}/login`, {
                 method: "POST",
                 body: formData,
                 credentials: "include",

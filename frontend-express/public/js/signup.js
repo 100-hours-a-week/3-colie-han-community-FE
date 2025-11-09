@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const profile = document.getElementById("profile");
     const profileCircle = document.querySelector(".profile-circle");
 
+    const baseUrl = window.API_BASE_URL || `${window.location.origin}/api`;
     const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]).{8,}$/;
     const NICKNAME_REGEX = /^[가-힣a-zA-Z0-9]{2,10}$/;
 
@@ -193,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append("profileImage", profile.files[0]);
 
         try {
-            const response = await fetch("http://localhost:8080/users", {
+            const response = await fetch(`${baseUrl}/users`, {
                 method: "POST",
                 body: formData,
             });

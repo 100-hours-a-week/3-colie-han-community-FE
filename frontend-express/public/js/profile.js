@@ -1,4 +1,6 @@
-const PROFILE_BASE_URL = (window.auth && window.auth.API_BASE_URL) || "http://localhost:8080";
+const PROFILE_BASE_URL = window.API_BASE_URL
+  || (window.auth && window.auth.API_BASE_URL)
+  || `${window.location.origin}/api`;
 let profileAreaInitialized = false;
 
 async function initProfileArea() {
