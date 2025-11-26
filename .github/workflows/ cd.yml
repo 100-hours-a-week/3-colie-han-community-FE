@@ -39,6 +39,7 @@ jobs:
 
     # 순서
     steps:
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
 
       - name: Login to Private Registry
