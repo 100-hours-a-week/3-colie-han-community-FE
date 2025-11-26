@@ -49,7 +49,7 @@ jobs:
       - name: Build Docker Image
         working-directory: ./frontend-express
         run: |
-          docker build -t ktb-express:latest
+          docker build -t ktb-express:latest .
         
 
       - name: Tag Image
