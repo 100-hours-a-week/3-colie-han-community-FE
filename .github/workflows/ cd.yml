@@ -1,0 +1,97 @@
+name: Frontend Js CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  # 테스트
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [19.x, 20.x, 22.x]
+    
+    # 순서
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{matrix.node-version}}
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./frontend-express
+      
+      - name: Run tests
+        run: npm test
+        working-directory: ./frontend-express
+
+  # 빌드, 이미지 푸시
+  build-and-push-image:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    # 순서
+    steps:
+      - uses: actions/setup-node@v6
+
+      - name: Login to Private Registry
+        run: |
+          echo "${{secrets.REGISTRY_PASSWORD}}" | docker login ${{secrets.REGISTRY_URL}} -u ${{secrets.REGISTRY_USERNAME}} --password-stdin
+
+      - name: Build Docker Image
+        working-directory: ./frontend-express
+        run: |
+          docker build -t ktb-express:latest
+        
+
+      - name: Tag Image
+        run: |
+          docker tag ktb-express:latest ${{secrets.REGISTRY_URL}}/ktb-express:latest
+      
+      - name: Push Image
+        run: |
+          docker push ${{secrets.REGISTRY_URL}}/ktb-express:latest
+
+
+  # 배포     
+  # deploy:
+  #   needs: build-and-push-image
+  #   runs-on: ubuntu-latest
+
+  #   # 순서
+  #   steps:
+  #     - name: Prepare SSH Key
+  #       run: |
+  #         # ssh 키 준비시키기
+
+  #     - name: Check if Docker is installed
+  #       id: check-docker
+  #       run: |
+  #         # 도커가 설치되어있는지 확인하기
+
+  #     - name: Check if Node.js is installted
+  #       id: check-nodejs
+  #       run: |
+  #         # 노드js가 설치되어있는지 확인하기
+
+  #     - name: Install Docker on EC2
+  #       if: steps.check-docker.outputs.docker_exists == 'false'
+  #       run: |
+  #         # 도커 설치하기
+
+  #     - name: Install Node.js on EC2
+  #       if: steps.check-nodejs.outputs.node_exists == 'false'
+  #       run: |
+  #         # 노드js설치하기
+
+  #     - name: Deploy to EC2 via Docker Compose
+  #       run: |
+  #         # 컴포즈로 FE배포하기
+  
