@@ -76,6 +76,13 @@ jobs:
         with:
           ssh-private-key: ${{secrets.SSH_PRIVATE_KEY}}
       
+      # 파일 권한오류 수정
+      - name: Pre-Deploy: Fix Directory Permissions
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{secrets.SSH_HOST_CONNECT}} "
+            sudo chown -R ubuntu:ubuntu /home/ubuntu/fe/
+          "
+
       - name: Send docker-compose.yml to Private EC2
         run: |
           scp -o StrictHostKeyChecking=no ./frontend-express/docker-compose.yml ${{secrets.SSH_HOST_CONNECT}}:/home/ubuntu/fe/docker-compose.yml
@@ -83,10 +90,6 @@ jobs:
       - name: Deploy to Private EC2 via SSH
         run: |
           ssh -o StrictHostKeyChecking=no ${{secrets.SSH_HOST_CONNECT}} "
-
-            # --- SSH 세션 내에서 실행되는 명령 ---
-
-            sudo chown -R ubuntu:ubuntu /home/ubuntu/fe/
 
             echo \"${{secrets.REGISTRY_PASSWORD}}\" | docker login ${{secrets.REGISTRY_URL}} -u ${{secrets.REGISTRY_USERNAME}} --password-stdin
         
