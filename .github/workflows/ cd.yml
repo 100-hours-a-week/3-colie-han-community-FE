@@ -90,7 +90,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{secrets.SSH_HOST_CONNECT}} "
 
-            echo \"${{secrets.REGISTRY_PASSWORD}}\" | docker login ${{secrets.REGISTRY_URL}} -u ${{secrets.REGISTRY_USERNAME}} --password-stdin
+            echo \"${{secrets.REGISTRY_PASSWORD}}\" | docker login ${{secrets.REGISTRY_PRIVATE_URL}} -u ${{secrets.REGISTRY_USERNAME}} --password-stdin
         
             cd /home/ubuntu/fe &&
 
