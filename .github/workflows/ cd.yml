@@ -78,7 +78,7 @@ jobs:
       
       - name: Send docker-compose.yml to Private EC2
         run: |
-          scp -o StrictHostKeyChecking=no ./frontend-express/docker-compose.yml${{secrets.SSH_HOST_CONNECT}}:/home/ubuntu/docker-compose.yml
+          scp -o StrictHostKeyChecking=no ./frontend-express/docker-compose.yml ${{secrets.SSH_HOST_CONNECT}}:/home/ubuntu/fe/docker-compose.yml
 
       - name: Deploy to Private EC2 via SSH
         run: |
