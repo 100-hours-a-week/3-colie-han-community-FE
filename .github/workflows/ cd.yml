@@ -85,9 +85,12 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{secrets.SSH_HOST_CONNECT}} "
 
             # --- SSH 세션 내에서 실행되는 명령 ---
+
+            sudo chown -R ubuntu:ubuntu /home/ubuntu/fe/
+
             echo \"${{secrets.REGISTRY_PASSWORD}}\" | docker login ${{secrets.REGISTRY_URL}} -u ${{secrets.REGISTRY_USERNAME}} --password-stdin
         
-            cd /home/ubuntu &&
+            cd /home/ubuntu/fe &&
 
             docker compose pull
 
