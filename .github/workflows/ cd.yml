@@ -34,13 +34,12 @@ jobs:
   # 빌드, 이미지 푸시
   build-and-push-image:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: [fe]
     if: github.ref == 'refs/heads/main'
 
     # 순서
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
 
       - name: Login to Private Registry
         run: |
@@ -58,7 +57,6 @@ jobs:
       - name: Push Image
         run: |
           docker push ${{secrets.REGISTRY_URL}}/ktb-express:latest
-
 
   # 배포     
   deploy:
