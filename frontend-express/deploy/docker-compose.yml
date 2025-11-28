@@ -1,6 +1,7 @@
 services:
   frontend:
     image: ${REGISTRY_URL}/ktb-express:latest 
+    container_name: ktb-express
     ports:
       - "80:3000"
     restart: always
