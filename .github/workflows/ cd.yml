@@ -51,7 +51,6 @@ jobs:
         run: |
           docker build -t ktb-express:latest .
         
-
       - name: Tag Image
         run: |
           docker tag ktb-express:latest ${{secrets.REGISTRY_URL}}/ktb-express:latest
@@ -84,7 +83,7 @@ jobs:
 
       - name: Send docker-compose.yml to Private EC2
         run: |
-          scp -o StrictHostKeyChecking=no ./frontend-express/docker-compose.yml ${{secrets.SSH_HOST_CONNECT}}:/home/ubuntu/fe/docker-compose.yml
+          scp -o StrictHostKeyChecking=no ./frontend-express/deploy/docker-compose.yml ${{secrets.SSH_HOST_CONNECT}}:/home/ubuntu/fe/docker-compose.yml
 
       - name: Deploy to Private EC2 via SSH
         run: |
