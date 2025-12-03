@@ -9,8 +9,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const viewCountValue = document.querySelector(".view-count-value");
     const commentCountValue = document.querySelector(".comment-count-value");
     const commentTextarea = document.querySelector(".comment-section textarea");
+    const commentCounter = document.querySelector(".comment-length");
     const commentSubmitBtn = document.querySelector(".comment-submit");
-    const COMMENT_MAX_LENGTH = 5000;
+    const COMMENT_MAX_LENGTH = 200;
 
     let isLiked = false;
     let isLikeProcessing = false;
@@ -303,11 +304,26 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+    function updateCommentCounter() {
+        if (commentTextarea && commentCounter) {
+            commentCounter.textContent = `${commentTextarea.value.length} / ${COMMENT_MAX_LENGTH}자`;
+        }
+    }
+
+    if (commentTextarea) {
+        commentTextarea.maxLength = COMMENT_MAX_LENGTH;
+        commentTextarea.addEventListener("input", updateCommentCounter);
+    }
+
 
     commentSubmitBtn.addEventListener("click", async () => {
         const content = commentTextarea.value.trim();
         if (!content) {
             alert("댓글 내용을 입력하세요.");
+            return;
+        }
+        if (content.length > COMMENT_MAX_LENGTH) {
+            alert(`댓글은 ${COMMENT_MAX_LENGTH}자 이하로 입력해주세요.`);
             return;
         }
 
@@ -322,6 +338,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
             if (!res.ok) throw new Error("댓글 등록 실패");
             commentTextarea.value = "";
+            updateCommentCounter();
             loadPostDetail();
         } catch (err) {
             console.error(err);
@@ -392,6 +409,26 @@ document.addEventListener("DOMContentLoaded", async () => {
         textarea.setAttribute("aria-label", "댓글 수정");
         textEl.replaceWith(textarea);
 
+        let editFootnote = commentItem.querySelector(".comment-edit-footnote");
+        if (!editFootnote) {
+            editFootnote = document.createElement("div");
+            editFootnote.className = "input-footnote comment-footnote comment-edit-footnote";
+            const counter = document.createElement("small");
+            counter.className = "comment-edit-length";
+            counter.textContent = `${textarea.value.length} / ${COMMENT_MAX_LENGTH}자`;
+            editFootnote.appendChild(counter);
+            textarea.insertAdjacentElement("afterend", editFootnote);
+        }
+
+        const editCounter = editFootnote.querySelector(".comment-edit-length");
+        const updateEditCounter = () => {
+            if (editCounter) {
+                editCounter.textContent = `${textarea.value.length} / ${COMMENT_MAX_LENGTH}자`;
+            }
+        };
+        textarea.addEventListener("input", updateEditCounter);
+        updateEditCounter();
+
         const actions = commentItem.querySelector(".comment-actions");
         if (actions) {
             const editBtn = actions.querySelector(".save-edit-btn, .edit-btn");
@@ -433,6 +470,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             textNode.className = "comment-text";
             textNode.textContent = originalText;
             textarea.replaceWith(textNode);
+        }
+        const editFootnote = commentItem.querySelector(".comment-edit-footnote");
+        if (editFootnote) {
+            editFootnote.remove();
         }
 
         const actions = commentItem.querySelector(".comment-actions");
@@ -512,6 +553,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (canUseLike) {
             await loadLikeState();
         }
+        updateCommentCounter();
     } catch (_) {
         
     }
