@@ -6,6 +6,11 @@ let profileAreaInitialized = false;
 async function initProfileArea() {
   if (profileAreaInitialized) return;
 
+  const path = window.location.pathname || "";
+  if (path.includes("login") || path.includes("signup")) {
+    return;
+  }
+
   const profileBtn = document.querySelector(".profile-btn");
   const profileImg = profileBtn ? profileBtn.querySelector(".profile-img") : null;
   const logoutBtn = document.querySelector(".logout-btn");
