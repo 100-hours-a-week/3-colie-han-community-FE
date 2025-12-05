@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const passwordConfirm = document.getElementById("passwordConfirm");
     const nickname = document.getElementById("nickname");
     const profile = document.getElementById("profile");
+    const signupBtn = document.querySelector(".signup-btn");
     const profileCircle = document.querySelector(".profile-circle");
 
     const baseUrl = window.API_BASE_URL || `${window.location.origin}/api`;
@@ -42,6 +43,31 @@ document.addEventListener("DOMContentLoaded", function () {
         setHelper(helper, helper.dataset.default || "", "info");
     };
 
+    const updateButtonState = () => {
+        if (!signupBtn) return;
+        const emailValid = email.value.trim() && email.validity.valid;
+        const passwordValue = password.value.trim();
+        const nicknameValue = nickname.value.trim();
+        const passwordValid = PASSWORD_REGEX.test(passwordValue);
+        const confirmValid =
+            passwordConfirm.value.trim() &&
+            passwordConfirm.value.trim() === passwordValue;
+        const nicknameValid =
+            NICKNAME_REGEX.test(nicknameValue) &&
+            !/[\u3130-\u318F]/.test(nicknameValue);
+        const hasProfile = !!profile.files[0];
+
+        const ready =
+            emailValid &&
+            passwordValid &&
+            confirmValid &&
+            nicknameValid &&
+            hasProfile;
+
+        signupBtn.disabled = !ready;
+        signupBtn.classList.toggle("is-disabled", !ready);
+    };
+
     profile.addEventListener("change", (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -57,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
             profileCircle.textContent = "+";
             setHelper(helpers.profile, "프로필 이미지를 선택해주세요.", "error");
         }
+        updateButtonState();
     });
 
     const titleEl = document.querySelector(".header h1");
@@ -132,19 +159,23 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             setHelper(helpers.email, "사용 가능한 이메일입니다.", "success");
         }
+        updateButtonState();
     });
 
     password.addEventListener("input", () => {
         validatePassword(true);
         if (passwordConfirm.value.trim()) validatePasswordConfirm(true);
+        updateButtonState();
     });
 
     passwordConfirm.addEventListener("input", () => {
         validatePasswordConfirm(true);
+        updateButtonState();
     });
 
     nickname.addEventListener("input", () => {
         validateNickname(true);
+        updateButtonState();
     });
 
     form.addEventListener("submit", async (e) => {
@@ -223,4 +254,6 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
         }
     });
+
+    updateButtonState();
 });
