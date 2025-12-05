@@ -106,7 +106,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         alert("회원 정보를 불러올 수 없습니다.");
     }
 
-    editBtn.addEventListener("click", () => fileInput.click());
+    if (editBtn) {
+        editBtn.style.display = "none";
+    }
+    if (preview) {
+        preview.addEventListener("click", () => fileInput.click());
+        const previewWrapper = preview.parentElement;
+        if (previewWrapper && previewWrapper.classList.contains("profile-circle")) {
+            previewWrapper.style.cursor = "pointer";
+        }
+    }
     fileInput.addEventListener("change", (e) => {
         const file = e.target.files[0];
         if (file) preview.src = URL.createObjectURL(file);
