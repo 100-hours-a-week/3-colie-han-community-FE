@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const profileCircle = document.querySelector(".profile-circle");
 
     const baseUrl = window.API_BASE_URL || `${window.location.origin}/api`;
-    const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]).{8,}$/;
+    const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]).{8,20}$/;
     const NICKNAME_REGEX = /^[가-힣a-zA-Z0-9]{2,10}$/;
 
     const helpers = {
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
         if (!PASSWORD_REGEX.test(value)) {
-            setHelper(helpers.password, "영문, 숫자, 특수문자를 포함해 8자 이상 입력해주세요.", "error");
+            setHelper(helpers.password, "영문, 숫자, 특수문자를 포함해 8~20자로 입력해주세요.", "error");
             return false;
         }
         if (showSuccess) {
