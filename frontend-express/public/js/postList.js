@@ -2,6 +2,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const baseUrl = window.API_BASE_URL || `${window.location.origin}/api`;
     const postListContainer = document.querySelector(".post-list");
     const createBtn = document.querySelector(".create-btn");
+    let isNavigatingAway = false;
+
+    window.addEventListener("beforeunload", () => {
+        isNavigatingAway = true;
+    });
 
     createBtn.addEventListener("click", () => {
         window.location.href = "./postForm?mode=create";
@@ -26,9 +31,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (!res.ok) throw new Error("Unauthorized");
         } catch (err) {
-            alert("로그인이 필요합니다.");
-            window.location.href = "./login";
-            throw err;
+            if (!isNavigatingAway) {
+                alert("로그인이 필요합니다.");
+                window.location.href = "./login";
+            }
+            return;
         }
     }
 
@@ -44,6 +51,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             renderPostList(data.content);
         } catch (err) {
+            const message = (err && err.message) || "";
+            const isAbort =
+                err?.name === "AbortError" ||
+                message.includes("AbortError") ||
+                message.includes("aborted") ||
+                message.includes("ERR_ABORTED");
+            if (isAbort || isNavigatingAway) return;
             console.error("게시글 목록 로드 오류:", err);
             postListContainer.innerHTML = `<p class="error">게시글을 불러오는 중 오류가 발생했습니다.</p>`;
         }

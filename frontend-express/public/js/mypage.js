@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const baseUrl = window.API_BASE_URL || `${window.location.origin}/api`;
+    let isNavigatingAway = false;
+
+    window.addEventListener("beforeunload", () => {
+        isNavigatingAway = true;
+    });
 
     try {
         const check = await fetch(`${baseUrl}/users`, {
@@ -7,13 +12,23 @@ document.addEventListener("DOMContentLoaded", async () => {
             credentials: "include",
         });
         if (!check.ok) {
-            alert("로그인이 필요합니다.");
-            window.location.href = "./login";
+            if (!isNavigatingAway) {
+                alert("로그인이 필요합니다.");
+                window.location.href = "./login";
+            }
             return;
         }
-    } catch {
-        alert("로그인이 필요합니다.");
-        window.location.href = "./login";
+    } catch (err) {
+        const message = (err && err.message) || "";
+        const isAbort =
+            err?.name === "AbortError" ||
+            message.includes("AbortError") ||
+            message.includes("aborted") ||
+            message.includes("ERR_ABORTED");
+        if (!isAbort && !isNavigatingAway) {
+            alert("로그인이 필요합니다.");
+            window.location.href = "./login";
+        }
         return;
     }
 
@@ -80,6 +95,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             : "../default/profile-sample.png";
         validateNickname();
     } catch (err) {
+        const message = (err && err.message) || "";
+        const isAbort =
+            err?.name === "AbortError" ||
+            message.includes("AbortError") ||
+            message.includes("aborted") ||
+            message.includes("ERR_ABORTED");
+        if (isAbort || isNavigatingAway) return;
         console.error(err);
         alert("회원 정보를 불러올 수 없습니다.");
     }

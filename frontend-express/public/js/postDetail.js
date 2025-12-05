@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const commentCounter = document.querySelector(".comment-length");
     const commentSubmitBtn = document.querySelector(".comment-submit");
     const COMMENT_MAX_LENGTH = 200;
+    let isNavigatingAway = false;
 
     let isLiked = false;
     let isLikeProcessing = false;
@@ -20,6 +21,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     const baseUrl = window.API_BASE_URL || `${window.location.origin}/api`;
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get("postId");
+    const isAbortError = (err) => {
+        const message = (err && err.message) || "";
+        return (
+            err?.name === "AbortError" ||
+            message.includes("AbortError") ||
+            message.includes("aborted") ||
+            message.includes("ERR_ABORTED")
+        );
+    };
+    window.addEventListener("beforeunload", () => {
+        isNavigatingAway = true;
+    });
 
     if (!postId) {
         alert("잘못된 접근입니다.");
@@ -72,10 +85,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                 credentials: "include",
             });
             if (!res.ok) throw new Error("Unauthorized");
+            return true;
         } catch (err) {
-            alert("로그인이 필요합니다.");
-            window.location.href = "./login";
-            throw err;
+            if (isAbortError(err)) return;
+            if (!isNavigatingAway) {
+                alert("로그인이 필요합니다.");
+                window.location.href = "./login";
+            }
+            return false;
         }
     }
 
@@ -84,12 +101,28 @@ document.addEventListener("DOMContentLoaded", async () => {
             const res = await fetch(`${baseUrl}/posts/${postId}`, {
                 credentials: "include",
             });
-            if (!res.ok) throw new Error("게시글 로드 실패");
+            if (!res.ok) {
+                if (res.status === 401) {
+                    window.location.href = "./login";
+                    return;
+                }
+                if (res.status === 404) {
+                    alert("존재하지 않는 게시글입니다.");
+                    window.location.href = "./postList";
+                    return;
+                }
+                throw new Error("게시글 로드 실패");
+            }
             const post = await res.json();
             renderPostDetail(post);
+            return true;
         } catch (err) {
-            console.error(err);
-            alert("게시글을 불러오는 중 오류가 발생했습니다.");
+            if (isAbortError(err)) return; // 새로고침 중 abort는 무시
+            if (!isNavigatingAway) {
+                console.error(err);
+                alert("게시글을 불러오는 중 오류가 발생했습니다.");
+            }
+            return false;
         }
     }
 
@@ -102,12 +135,20 @@ document.addEventListener("DOMContentLoaded", async () => {
                 method: "GET",
                 credentials: "include",
             });
-            if (!response.ok) return null;
+            if (!response.ok) {
+                if (response.status === 401) return null;
+                throw new Error("현재 사용자 정보 조회 실패");
+            }
             const me = await response.json();
             __currentUserId = me?.id ?? null;
+            return true;
         } catch (err) {
-            console.error("현재 사용자 정보 조회 실패:", err);
+            if (isAbortError(err)) return;
+            if (!isNavigatingAway) {
+                console.error("현재 사용자 정보 조회 실패:", err);
+            }
             __currentUserId = null;
+            return false;
         }
     }
 
@@ -272,7 +313,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 isLiked = false;
             }
         } catch (err) {
-            console.error("좋아요 상태 확인 실패:", err);
+            if (!isAbortError(err) && !isNavigatingAway) {
+                console.error("좋아요 상태 확인 실패:", err);
+            }
             isLiked = false;
         } finally {
             applyLikeState();
@@ -294,8 +337,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             await loadPostDetail();
             await loadLikeState();
         } catch (err) {
-            console.error("좋아요 처리 중 오류:", err);
-            alert("좋아요 처리에 실패했습니다.");
+            if (!isNavigatingAway) {
+                console.error("좋아요 처리 중 오류:", err);
+                alert("좋아요 처리에 실패했습니다.");
+            }
         } finally {
             if (likeToggleBtn) {
                 likeToggleBtn.disabled = false;
@@ -341,8 +386,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             updateCommentCounter();
             loadPostDetail();
         } catch (err) {
-            console.error(err);
-            alert("댓글 등록 중 오류가 발생했습니다.");
+            if (!isNavigatingAway) {
+                console.error(err);
+                alert("댓글 등록 중 오류가 발생했습니다.");
+            }
         }
     });
 
@@ -547,9 +594,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-        await ensureLoggedIn();
+        const authed = await ensureLoggedIn();
+        if (!authed) return;
         await fetchCurrentUser();
-        await loadPostDetail();
+        const loaded = await loadPostDetail();
+        if (!loaded) return;
         if (canUseLike) {
             await loadLikeState();
         }
