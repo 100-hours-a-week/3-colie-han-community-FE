@@ -202,13 +202,21 @@ document.addEventListener("DOMContentLoaded", function () {
             if (response.ok) {
                 alert("회원가입이 완료되었습니다.");
                 window.location.href = "login";
-            } else {
-                try {
-                    const errorData = await response.json();
+                return;
+            }
+
+            try {
+                const errorData = await response.json();
+                const code = (errorData?.message || "").toString().toUpperCase();
+                if (code.includes("EMAIL_ALREADY_EXISTS")) {
+                    alert("이미 사용 중인 이메일입니다. 다른 이메일을 입력해주세요.");
+                } else if (code.includes("NICKNAME_ALREADY_EXISTS")) {
+                    alert("이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.");
+                } else {
                     alert(errorData.message || "회원가입 실패: 입력값을 확인해주세요");
-                } catch {
-                    alert("회원가입 실패: 서버 응답이 비정상입니다.");
                 }
+            } catch {
+                alert("회원가입 실패: 서버 응답이 비정상입니다.");
             }
         } catch (error) {
             console.error("서버 오류:", error);
