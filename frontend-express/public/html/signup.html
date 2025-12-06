@@ -21,19 +21,19 @@
 
       <form class="signup-form">
         <label for="email">이메일*</label>
-        <input type="email" id="email" placeholder="이메일을 입력하세요" required />
+        <input type="email" id="email" placeholder="이메일을 입력하세요" maxlength="100" required />
         <small class="helper-text">* 이메일은 로그인 시 사용됩니다.</small>
 
         <label for="password">비밀번호*</label>
-        <input type="password" id="password" placeholder="비밀번호를 입력하세요" required />
-        <small class="helper-text">* 8자 이상 입력해주세요.</small>
+        <input type="password" id="password" placeholder="비밀번호를 입력하세요" maxlength="20" required />
+        <small class="helper-text">* 비밀번호를 8~20자로 입력해주세요.</small>
 
         <label for="passwordConfirm">비밀번호 확인*</label>
-        <input type="password" id="passwordConfirm" placeholder="비밀번호를 한 번 더 입력하세요" required />
+        <input type="password" id="passwordConfirm" placeholder="비밀번호를 한 번 더 입력하세요" maxlength="20" required />
         <small class="helper-text">* 비밀번호를 다시 한 번 입력해주세요.</small>
 
         <label for="nickname">닉네임*</label>
-        <input type="text" id="nickname" placeholder="닉네임을 입력하세요" required />
+        <input type="text" id="nickname" placeholder="닉네임을 입력하세요" maxlength="10" required />
         <small class="helper-text">* 커뮤니티 내 표시 이름입니다.</small>
 
         <button type="submit" class="signup-btn">회원가입</button>

@@ -6,6 +6,11 @@ let profileAreaInitialized = false;
 async function initProfileArea() {
   if (profileAreaInitialized) return;
 
+  const path = window.location.pathname || "";
+  if (path.includes("login") || path.includes("signup")) {
+    return;
+  }
+
   const profileBtn = document.querySelector(".profile-btn");
   const profileImg = profileBtn ? profileBtn.querySelector(".profile-img") : null;
   const logoutBtn = document.querySelector(".logout-btn");
@@ -39,8 +44,12 @@ async function initProfileArea() {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
       if (!confirm("로그아웃 하시겠어요?")) return;
+
+      // 일부 백엔드에서 /api prefix 없이 로그아웃을 받는 경우가 있어 둘 다 시도한다.
+      const rootBaseUrl = PROFILE_BASE_URL.replace(/\/api\/?$/, "");
       const attempts = [
         { url: `${PROFILE_BASE_URL}/logout`, options: { method: "POST", credentials: "include" } },
+        { url: `${rootBaseUrl}/logout`, options: { method: "POST", credentials: "include" } },
         { url: `${PROFILE_BASE_URL}/logout`, options: { method: "GET", credentials: "include" } },
         { url: `${PROFILE_BASE_URL}/auth/logout`, options: { method: "POST", credentials: "include" } }
       ];

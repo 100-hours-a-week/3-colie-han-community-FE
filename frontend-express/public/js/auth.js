@@ -1,5 +1,6 @@
 (function () {
-  const DEFAULT_API_BASE_URL = `${window.location.origin}/api`;
+  //const DEFAULT_API_BASE_URL = `http://localhost:8080/api`;     // 로컬테스트용 
+  const DEFAULT_API_BASE_URL = `${window.location.origin}/api`;   // 배포용
   const API_BASE_URL = (() => {
     const candidate = window.API_BASE_URL || DEFAULT_API_BASE_URL;
     try {

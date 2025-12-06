@@ -5,10 +5,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const passwordConfirm = document.getElementById("passwordConfirm");
     const nickname = document.getElementById("nickname");
     const profile = document.getElementById("profile");
+    const signupBtn = document.querySelector(".signup-btn");
     const profileCircle = document.querySelector(".profile-circle");
 
     const baseUrl = window.API_BASE_URL || `${window.location.origin}/api`;
-    const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]).{8,}$/;
+    const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]).{8,20}$/;
     const NICKNAME_REGEX = /^[가-힣a-zA-Z0-9]{2,10}$/;
 
     const helpers = {
@@ -42,6 +43,31 @@ document.addEventListener("DOMContentLoaded", function () {
         setHelper(helper, helper.dataset.default || "", "info");
     };
 
+    const updateButtonState = () => {
+        if (!signupBtn) return;
+        const emailValid = email.value.trim() && email.validity.valid;
+        const passwordValue = password.value.trim();
+        const nicknameValue = nickname.value.trim();
+        const passwordValid = PASSWORD_REGEX.test(passwordValue);
+        const confirmValid =
+            passwordConfirm.value.trim() &&
+            passwordConfirm.value.trim() === passwordValue;
+        const nicknameValid =
+            NICKNAME_REGEX.test(nicknameValue) &&
+            !/[\u3130-\u318F]/.test(nicknameValue);
+        const hasProfile = !!profile.files[0];
+
+        const ready =
+            emailValid &&
+            passwordValid &&
+            confirmValid &&
+            nicknameValid &&
+            hasProfile;
+
+        signupBtn.disabled = !ready;
+        signupBtn.classList.toggle("is-disabled", !ready);
+    };
+
     profile.addEventListener("change", (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -57,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
             profileCircle.textContent = "+";
             setHelper(helpers.profile, "프로필 이미지를 선택해주세요.", "error");
         }
+        updateButtonState();
     });
 
     const titleEl = document.querySelector(".header h1");
@@ -74,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
         if (!PASSWORD_REGEX.test(value)) {
-            setHelper(helpers.password, "영문, 숫자, 특수문자를 포함해 8자 이상 입력해주세요.", "error");
+            setHelper(helpers.password, "영문, 숫자, 특수문자를 포함해 8~20자로 입력해주세요.", "error");
             return false;
         }
         if (showSuccess) {
@@ -132,19 +159,23 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             setHelper(helpers.email, "사용 가능한 이메일입니다.", "success");
         }
+        updateButtonState();
     });
 
     password.addEventListener("input", () => {
         validatePassword(true);
         if (passwordConfirm.value.trim()) validatePasswordConfirm(true);
+        updateButtonState();
     });
 
     passwordConfirm.addEventListener("input", () => {
         validatePasswordConfirm(true);
+        updateButtonState();
     });
 
     nickname.addEventListener("input", () => {
         validateNickname(true);
+        updateButtonState();
     });
 
     form.addEventListener("submit", async (e) => {
@@ -202,17 +233,27 @@ document.addEventListener("DOMContentLoaded", function () {
             if (response.ok) {
                 alert("회원가입이 완료되었습니다.");
                 window.location.href = "login";
-            } else {
-                try {
-                    const errorData = await response.json();
+                return;
+            }
+
+            try {
+                const errorData = await response.json();
+                const code = (errorData?.message || "").toString().toUpperCase();
+                if (code.includes("EMAIL_ALREADY_EXISTS")) {
+                    alert("이미 사용 중인 이메일입니다. 다른 이메일을 입력해주세요.");
+                } else if (code.includes("NICKNAME_ALREADY_EXISTS")) {
+                    alert("이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.");
+                } else {
                     alert(errorData.message || "회원가입 실패: 입력값을 확인해주세요");
-                } catch {
-                    alert("회원가입 실패: 서버 응답이 비정상입니다.");
                 }
+            } catch {
+                alert("회원가입 실패: 서버 응답이 비정상입니다.");
             }
         } catch (error) {
             console.error("서버 오류:", error);
             alert("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
         }
     });
+
+    updateButtonState();
 });

@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const helperText = document.querySelector(".helper-text");
     const pageTitle = document.querySelector(".post-title");
     const submitBtn = document.querySelector(".submit-btn");
-    const titleCounter = document.querySelector('.char-counter[data-target="title"]');
-    const contentCounter = document.querySelector('.char-counter[data-target="content"]');
+    const titleCounter = document.querySelector('.js-title-counter');
+    const contentCounter = document.querySelector('.js-content-counter');
 
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get("postId");
