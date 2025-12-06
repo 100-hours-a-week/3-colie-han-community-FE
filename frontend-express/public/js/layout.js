@@ -9,6 +9,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     const header = doc.querySelector("header");
     const footer = doc.querySelector("footer");
 
+    const path = window.location.pathname || "";
+    const isAuthPage = path.includes("login") || path.includes("signup");
+
+    if (isAuthPage && header) {
+      const profileArea = header.querySelector(".profile-area");
+      if (profileArea) {
+        profileArea.style.display = "none";
+      }
+    }
+
     // body에 주입
     document.body.prepend(header);
     document.body.append(footer);
