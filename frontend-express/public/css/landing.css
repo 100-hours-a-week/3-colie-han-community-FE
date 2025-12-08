@@ -482,6 +482,33 @@ body {
   color: rgba(247, 246, 241, 0.82);
 }
 
+.enter-btn {
+  margin-top: 1.2rem;
+  padding: 0.8rem 1.8rem;
+  background: #000000;
+  border: 1px solid #3a3a3a;
+  color: #f2f2f2;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.32);
+  transition: transform 0.18s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.enter-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.42);
+  background: #101010;
+  border-color: #4a4a4a;
+}
+
+.enter-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
 @media (max-width: 860px) {
   .info-panel {
     position: static;

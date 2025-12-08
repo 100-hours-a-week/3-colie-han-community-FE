@@ -20,9 +20,15 @@
             <p class="post-date"></p>
           </div>
         </div>
-        <div class="post-actions" style="display: none;">
-          <button class="edit-btn">수정</button>
-          <button class="delete-btn">삭제</button>
+        <div class="meta-actions">
+          <button class="like-toggle" type="button" aria-pressed="false">
+            <span class="like-icon" aria-hidden="true">♡</span>
+            <span class="like-toggle-text">좋아요</span>
+          </button>
+          <div class="post-actions" style="display: none;">
+            <button class="edit-btn">수정</button>
+            <button class="delete-btn">삭제</button>
+          </div>
         </div>
       </div>
 
@@ -31,10 +37,6 @@
 
       <div class="post-stats">
         <div class="stat-box like-box">
-          <button class="like-toggle" type="button" aria-pressed="false">
-            <span class="like-icon" aria-hidden="true">♡</span>
-            <span class="like-toggle-text">좋아요</span>
-          </button>
           <div class="stat-value">
             <span class="stat-count like-count-value">0</span>
             <span class="stat-caption">좋아요수</span>
