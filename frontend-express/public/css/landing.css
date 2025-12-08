@@ -58,6 +58,12 @@ body {
   }
 }
 
+@property --pulse-scale {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1;
+}
+
 .solar-system {
   --plane-scale-x: 1.42;
   --plane-scale-y: 0.38;
@@ -128,10 +134,53 @@ body {
   margin-left: calc(var(--planet-size) / -2);
   margin-top: calc(var(--planet-size) / -2);
   border-radius: 50%;
-  transform: translateX(calc(var(--size) / 2 - var(--planet-size) / 2));
+  --pulse-scale: 1;
+  --hover-scale: 1;
+  transform: translateX(calc(var(--size) / 2 - var(--planet-size) / 2)) scale(var(--pulse-scale)) scale(var(--hover-scale));
   box-shadow:
     0 0 12px var(--glow),
     0 0 18px var(--glow);
+  overflow: visible;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  animation: planet-pulse 4.8s ease-in-out infinite;
+}
+
+.planet .planet-label {
+  --label-offset-y: 0px;
+  --label-rotate: 0deg;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(var(--label-offset-y)) rotate(var(--label-rotate));
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, 0.9);
+  color: #f7f6f1;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.35));
+  transition: opacity 0.16s ease, transform 0.18s ease;
+  z-index: 6;
+  animation: label-counter var(--duration) linear infinite;
+}
+
+.planet:hover,
+.planet:focus-visible,
+.planet:active {
+  --hover-scale: 1.12;
+  box-shadow:
+    0 0 14px var(--glow),
+    0 0 22px var(--glow);
+}
+
+.planet:hover .planet-label,
+.planet:focus-visible .planet-label,
+.planet:active .planet-label {
+  opacity: 1;
+  --label-offset-y: -2px;
 }
 
 .orbit--mercury {
@@ -309,6 +358,29 @@ body {
   }
 }
 
+@keyframes planet-pulse {
+  0% {
+    --pulse-scale: 1;
+  }
+  55% {
+    --pulse-scale: 1.045;
+  }
+  100% {
+    --pulse-scale: 1;
+  }
+}
+
+@keyframes label-counter {
+  0% {
+    --label-rotate: 0deg;
+    transform: translateX(-50%) translateY(var(--label-offset-y)) rotate(0deg);
+  }
+  100% {
+    --label-rotate: -360deg;
+    transform: translateX(-50%) translateY(var(--label-offset-y)) rotate(-360deg);
+  }
+}
+
 @keyframes sun-pulse {
   0% {
     transform: scale(0.98);
@@ -329,6 +401,11 @@ body {
     width: 780px;
     height: 460px;
     transform: translate(-50%, -50%) scale(0.78);
+  }
+
+  .planet .planet-label {
+    font-size: 0.7rem;
+    bottom: calc(100% + 6px);
   }
 
   .starfield {
