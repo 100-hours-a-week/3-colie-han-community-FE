@@ -289,10 +289,10 @@ body {
 .orbit--saturn .planet::after {
   content: "";
   position: absolute;
-  inset: -2px -9px;
+  inset: -1px -7px;
   border-radius: 50%;
   border: 1px solid rgba(255, 240, 210, 0.45);
-  transform: rotate(18deg) scaleX(1.22) scaleY(0.52);
+  transform: rotate(18deg) scaleX(1.12) scaleY(0.48);
   opacity: 0.92;
   pointer-events: none;
 }
@@ -302,7 +302,7 @@ body {
 }
 
 .orbit--saturn .planet::after {
-  clip-path: ellipse(64% 26% at 50% 54%);
+  clip-path: ellipse(60% 22% at 50% 54%);
   z-index: 3;
 }
 
