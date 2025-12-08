@@ -1,17 +1,18 @@
 :root {
-  --bg-body: #f6f1e4;
-  --bg-surface: #fffdf4;
-  --bg-surface-alt: #f0e8d6;
-  --ink-primary: #171717;
-  --ink-secondary: #2e2e2e;
-  --ink-muted: #595959;
-  --ink-inverse: #f5f2e8;
-  --accent: #101010;
-  --accent-soft: #303030;
-  --border-color: #d5cbb6;
-  --border-strong: #b8ad97;
-  --shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.08);
-  --shadow-lean: 0 4px 10px rgba(0, 0, 0, 0.06);
+  --bg-canvas: #000000;
+  --bg-body: #0b0b0b;
+  --bg-surface: #111111;
+  --bg-surface-alt: #161616;
+  --ink-primary: #f2f2f2;
+  --ink-secondary: #cccccc;
+  --ink-muted: #9a9a9a;
+  --ink-inverse: #0b0b0b;
+  --accent: #1f1f1f;
+  --accent-soft: #262626;
+  --border-color: #2f2f2f;
+  --border-strong: #3a3a3a;
+  --shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lean: 0 4px 10px rgba(0, 0, 0, 0.28);
   --radius-lg: 14px;
   --radius-md: 10px;
   --radius-sm: 6px;
@@ -25,11 +26,61 @@
 
 body {
   font-family: 'Noto Sans KR', sans-serif;
-  background-color: var(--bg-body);
+  background-color: var(--bg-canvas);
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(80, 80, 80, 0.22), transparent 60%),
+    radial-gradient(circle at 80% 30%, rgba(120, 120, 120, 0.18), transparent 58%),
+    radial-gradient(circle at 35% 82%, rgba(60, 60, 80, 0.12), transparent 54%);
+  background-attachment: fixed;
   color: var(--ink-primary);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+  isolation: isolate;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: -1;
+}
+
+body::before {
+  background-image:
+    radial-gradient(1px 1px at 10px 20px, rgba(255, 255, 255, 0.8) 50%, transparent 51%),
+    radial-gradient(1px 1px at 50px 80px, rgba(220, 220, 220, 0.72) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 120px 60px, rgba(255, 255, 255, 0.64) 50%, transparent 51%);
+  background-size: 140px 140px;
+  opacity: 0.65;
+  animation: star-drift 32s linear infinite;
+}
+
+body::after {
+  background-image:
+    radial-gradient(1px 1px at 40px 30px, rgba(255, 255, 255, 0.7) 50%, transparent 51%),
+    radial-gradient(1px 1px at 90px 110px, rgba(220, 220, 220, 0.62) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 150px 170px, rgba(255, 255, 255, 0.52) 50%, transparent 51%);
+  background-size: 180px 180px;
+  opacity: 0.48;
+  animation: star-drift 46s linear infinite reverse;
+}
+
+@keyframes star-drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-1.8%, -2.6%, 0);
+  }
+  100% {
+    transform: translate3d(1.2%, 1.6%, 0);
+  }
 }
 
 a {
@@ -38,9 +89,9 @@ a {
 
 .header {
   height: 64px;
-  background-color: var(--accent);
-  color: var(--ink-inverse);
-  border-bottom: 1px solid #0a0a0a;
+  background-color: #000000;
+  color: var(--ink-primary);
+  border-bottom: 1px solid var(--border-strong);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -59,13 +110,13 @@ a {
 .logo {
   font-size: 1.35rem;
   font-weight: 700;
-  color: var(--ink-inverse);
+  color: var(--ink-primary);
   text-decoration: none;
 }
 
 .nav a {
   margin-left: 1rem;
-  color: var(--ink-inverse);
+  color: var(--ink-primary);
   text-decoration: none;
   font-weight: 500;
   padding: 0.3rem 0.6rem;
@@ -74,7 +125,7 @@ a {
 }
 
 .nav a:hover {
-  background-color: var(--accent-soft);
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 .profile-area {
@@ -85,8 +136,8 @@ a {
 
 .logout-btn {
   background-color: transparent;
-  border: 1px solid #2a2a2a;
-  color: var(--ink-inverse);
+  border: 1px solid var(--border-strong);
+  color: var(--ink-primary);
   font-size: 0.85rem;
   padding: 0.4rem 0.9rem;
   border-radius: var(--radius-sm);
@@ -95,27 +146,27 @@ a {
 }
 
 .logout-btn:hover {
-  background-color: #252525;
-  border-color: #3a3a3a;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 .profile-btn {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 1px solid #2a2a2a;
-  background-color: #1a1a1a;
+  border: 1px solid var(--border-strong);
+  background-color: rgba(255, 255, 255, 0.04);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   overflow: hidden;
-  box-shadow: inset 0 0 0 1px #303030;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
   padding: 0;
 }
 
 .profile-btn:hover {
-  background-color: #252525;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .profile-btn .profile-img {
@@ -133,7 +184,7 @@ a {
   width: 220px;
   height: calc(100% - 64px);
   background-color: var(--bg-surface);
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-strong);
   padding: 1.4rem 1.2rem;
 }
 
@@ -170,12 +221,47 @@ body.has-sidebar .main {
 }
 
 .footer {
-  background-color: var(--accent);
-  color: var(--ink-inverse);
-  border-top: 1px solid #0a0a0a;
-  text-align: center;
-  padding: 1rem 0;
+  background-color: #000000;
+  color: var(--ink-muted);
+  border-top: 1px solid var(--border-strong);
+  padding: 1rem 2.2rem;
   font-size: 0.9rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: right;
+  gap: 0.8rem;
+}
+
+.footer .footer-links {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.footer .footer-links a {
+  color: var(--ink-muted);
+  text-decoration: none;
+}
+
+.footer .footer-links a:hover {
+  color: var(--ink-secondary);
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding: 1rem 0.6rem;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
+  }
+
+  .footer .footer-links {
+    justify-content: center;
+    gap: 0.6rem;
+  }
 }
 
 .helper-text {
