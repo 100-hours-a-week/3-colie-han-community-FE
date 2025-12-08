@@ -154,6 +154,14 @@ body {
   animation: planet-pulse 4.8s ease-in-out infinite;
 }
 
+.planet::after {
+  /* Larger invisible hit area so hover is easier */
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+}
+
 .planet .planet-label {
   --label-offset-y: 0px;
   --label-rotate: 0deg;
