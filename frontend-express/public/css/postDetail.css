@@ -56,7 +56,7 @@
   height: 44px;
   border-radius: 50%;
   background-color: var(--bg-surface-alt);
-  border: 2px solid var(--border-strong);
+  border: 1px solid var(--border-color);
   overflow: hidden;
 }
 

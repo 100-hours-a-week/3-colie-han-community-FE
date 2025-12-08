@@ -135,7 +135,7 @@ input[type="text"]:focus {
 
 .password-btn {
   background-color: var(--bg-body);
-  color: var(--ink-secondary);
+  color: var(--ink-primary);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   padding: 0.9rem;
