@@ -1,0 +1,56 @@
+/* ===== Legal Pages ===== */
+
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem 1.2rem 3.6rem;
+}
+
+.legal-container {
+  width: min(56rem, 96%);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: 2.6rem 2.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  color: var(--ink-primary);
+}
+
+.legal-header h1 {
+  font-size: 1.6rem;
+  margin: 0 0 0.35rem;
+}
+
+.legal-header p {
+  margin: 0;
+  color: var(--ink-muted);
+}
+
+.legal-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.legal-section h2 {
+  font-size: 1.1rem;
+  margin: 0;
+  color: var(--ink-secondary);
+}
+
+.legal-section p,
+.legal-section li {
+  line-height: 1.7;
+  color: var(--ink-secondary);
+  font-size: 0.98rem;
+}
+
+.legal-section ul {
+  padding-left: 1.2rem;
+  margin: 0.2rem 0 0;
+}

@@ -38,18 +38,21 @@
 }
 
 .create-btn {
-  background-color: var(--accent);
-  color: var(--ink-inverse);
-  border: none;
+  background-color: var(--bg-body);
+  color: var(--ink-secondary);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   padding: 0.8rem 1.6rem;
   font-size: 0.98rem;
   cursor: pointer;
   font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .create-btn:hover {
-  background-color: #1f1f1f;
+  background-color: var(--bg-surface-alt);
+  color: var(--ink-primary);
+  border-color: var(--border-strong);
 }
 
 .post-list {
@@ -59,7 +62,7 @@
 }
 
 .post-card {
-  background-color: #fff;
+  background-color: var(--bg-surface-alt);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
   padding: 1.5rem 1.7rem;
@@ -138,19 +141,21 @@
   padding: 0.9rem 2.6rem;
   border: 1px solid var(--border-color);
   border-radius: 999px;
-  background: linear-gradient(135deg, #1d1d1f, #303030);
-  color: var(--ink-inverse);
+  background: var(--bg-body);
+  color: var(--ink-secondary);
   font-weight: 700;
   letter-spacing: 0.01em;
   cursor: pointer;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .load-more-btn:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.16);
-  filter: brightness(1.03);
+  background: var(--bg-surface-alt);
+  color: var(--ink-primary);
+  border-color: var(--border-strong);
 }
 
 .load-more-btn:active:not(:disabled) {

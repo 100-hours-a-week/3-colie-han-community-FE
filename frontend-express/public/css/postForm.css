@@ -47,11 +47,12 @@
 .form-group textarea {
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  background-color: #fff;
+  background-color: var(--bg-surface-alt);
   padding: 0.75rem 1rem;
   font-size: 1rem;
   color: var(--ink-primary);
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .form-group textarea {
@@ -86,17 +87,19 @@
 }
 
 .submit-btn {
-  background-color: var(--accent);
-  color: var(--ink-inverse);
-  border: none;
+  background-color: #000000;
+  color: var(--ink-primary);
+  border: 1px solid #3a3a3a;
   border-radius: 8px;
   padding: 0.95rem;
   font-size: 1.05rem;
   cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .submit-btn:hover {
-  background-color: #1f1f1f;
+  background-color: #161616;
+  border-color: #4a4a4a;
 }
 
 .file-name {
