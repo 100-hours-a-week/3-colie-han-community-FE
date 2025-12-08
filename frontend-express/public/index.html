@@ -45,6 +45,7 @@
         행성을 클릭하면 게시판으로 이동해요.<br />
         마음껏 떠올리고, 흔적을 남겨보세요.
       </p>
+      <button type="button" class="enter-btn">입장하기</button>
     </div>
   </div>
 
@@ -94,6 +95,11 @@
           enter();
         });
       });
+
+      const enterBtn = document.querySelector(".enter-btn");
+      if (enterBtn) {
+        enterBtn.addEventListener("click", enter);
+      }
     });
   </script>
 </body>
