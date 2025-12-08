@@ -75,6 +75,20 @@
       };
 
       document.querySelectorAll(".planet").forEach((planet) => {
+        const orbit = planet.closest(".orbit");
+
+        planet.addEventListener("mouseenter", () => {
+          if (orbit) {
+            orbit.classList.add("orbit--paused");
+          }
+        });
+
+        planet.addEventListener("mouseleave", () => {
+          if (orbit) {
+            orbit.classList.remove("orbit--paused");
+          }
+        });
+
         planet.addEventListener("click", (e) => {
           e.preventDefault();
           enter();
