@@ -36,7 +36,10 @@ https://github.com/100-hours-a-week/3-colie-han-community-BE
 
 ## 🎥 시연 영상
 
-(영상링크)
+
+
+https://github.com/user-attachments/assets/13357295-c832-4177-98b1-f0c48717d114
+
 
 <br>
 
